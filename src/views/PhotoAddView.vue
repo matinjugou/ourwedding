@@ -58,7 +58,7 @@ const uploadPhoto = () => {
       <img v-else :src="imageSrc" alt="预览" />
     </div>
     <div v-if="imageSrc" class="upload-button-container">
-      <button @click="uploadPhoto">上传</button>
+      <el-button @click="uploadPhoto" type="success" round>上传</el-button>
     </div>
   </div>
   <RouterLink to="/photo/wall">
@@ -81,8 +81,9 @@ const uploadPhoto = () => {
   align-items: center;
   width: 100%;
   max-width: 400px;
-  height: 200px;
-  margin: 20px 0;
+  height: 100vw;
+  max-height: 400px;
+  margin: 20% 0;
   border: 2px dashed #ccc;
 }
 
@@ -120,7 +121,7 @@ const uploadPhoto = () => {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: #67c23a;
+  background-color: #67c23a75;
   color: white;
   font-size: 30px;
   display: flex;

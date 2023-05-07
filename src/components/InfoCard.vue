@@ -15,12 +15,12 @@ defineProps({
   <div class="greetings">
     <Transition name="fade" mode="out-in">
       <div v-if="!logined">
-        <h1 class="green">欢迎光临</h1>
-        <h3>您尚未登录，请通过微信扫描个人二维码登录。</h3>
+        <h1 class="title">欢迎光临</h1>
+        <p>您尚未登录，请通过微信扫描个人二维码登录。</p>
       </div>
       <div v-else>
-        <h1 class="green">欢迎光临，{{ name }}</h1>
-        <h3>Enjoy your stay!</h3>
+        <h1 class="title">欢迎光临，{{ name }}</h1>
+        <p>Enjoy your stay!</p>
       </div>
     </Transition>
   </div>
@@ -37,28 +37,43 @@ defineProps({
   opacity: 0;
 }
 
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  top: -10px;
-}
-
-h3 {
-  font-size: 1.2rem;
-}
-
 .greetings {
   width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+  background-image: url('../assets/bg.png');
+  background-size: cover;
+  background-position: center;
+  padding: 56.8vh 2rem 2rem;
 }
 
+.greetings h1{
+  background-image:linear-gradient(to right, rgb(246 216 127),#ac2c20a6);
+  -webkit-background-clip:text; 
+  -webkit-text-fill-color:transparent;
+  width: fit-content;
+  font-family: 阿里妈妈东方大楷 Regular;
+  font-weight: 500;
+  font-size: 2.6rem;
+  line-height: initial;
+}
+
+
+.greetings p{
+  font-family: "阿里巴巴普惠体 2.0 35 Thin";
+  color: #f6e3e3c2;
+  font-weight: 600;
+  font-size: 1rem;
+  
+}
 .greetings h1,
-.greetings h3 {
-  text-align: center;
+.greetings p {
+  /* text-align: center; */
 }
 
 @media (min-width: 1024px) {
   .greetings h1,
-  .greetings h3 {
+  .greetings p {
     text-align: left;
   }
 }

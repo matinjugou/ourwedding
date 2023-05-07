@@ -29,18 +29,21 @@ function checkUniqueId() {
 </script>
 
 <template>
-  <el-card v-if="checkUniqueId()">
-    <template #header> 请输入姓名以验证身份 </template>
-    <el-form ref="loginForm" label-width="0px">
-      <el-form-item>
-        <el-input v-model="username" placeholder="姓名" />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="verify" style="width: 100%">登录</el-button>
-      </el-form-item>
-    </el-form>
-  </el-card>
-  <el-card v-else>
-    <span>验证失败，请确认二维码正确</span>
-  </el-card>
+  <div class="main">
+    <div class="header"></div>
+    <el-card class="card_form" v-if="checkUniqueId()">
+      <template #header> <h3>请输入姓名以验证身份</h3>  </template>
+      <el-form ref="loginForm" label-width="0px">
+        <el-form-item>
+          <el-input v-model="username" placeholder="姓名" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="verify" style="width: 100%;">登录</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
+    <el-card v-else style="text-align: center;">
+      <span>验证失败，请确认二维码正确</span>
+    </el-card>
+  </div>
 </template>

@@ -5,6 +5,8 @@ const guestInfo = useGuestInfoStore()
 </script>
 
 <template>
+  <div class="main">
+    <div class="header"></div>
   <el-card class="info-block">
     <template #header>
       <h3>婚礼信息</h3>
@@ -40,13 +42,16 @@ const guestInfo = useGuestInfoStore()
     </template>
     <span>尚无当日日程安排，敬请期待</span>
   </el-card>
+  </div>
+  
 </template>
 
 <style scoped>
-.info-block {
-  margin-bottom: 20px;
-}
-h3 {
-  font-weight: bold;
-}
+/* .info-block {
+  margin: 0 1rem 1rem;
+} */
+
+
+
+
 </style>

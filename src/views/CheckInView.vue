@@ -73,7 +73,8 @@ const scanQRCode = () => {
 
 <template>
   <div v-loading="loading" class="main">
-    <div v-if="checkedInStatus.status">
+    <div class="header"></div>
+    <div v-if="checkedInStatus.status" class="card">
       <el-row>
         <el-col :span="24">
           <span>
@@ -87,12 +88,12 @@ const scanQRCode = () => {
         </el-col>
       </el-row>
     </div>
-    <div v-if="!checkedInStatus.status && !loading">
-      <el-row>
-        <el-col :span="24">您尚未签到，请扫描现场二维码签到</el-col>
+    <div v-if="!checkedInStatus.status && !loading" class="card">
+      <el-row justify="center">
+        <el-col :span="24" class="hint">您尚未签到，请扫描现场二维码签到</el-col>
       </el-row>
-      <el-row>
-        <el-button @click="scanQRCode" type="primary">点击扫码</el-button>
+      <el-row justify="center">
+        <el-button @click="scanQRCode" type="primary" class="btn">点击扫码</el-button>
       </el-row>
     </div>
   </div>
@@ -104,11 +105,6 @@ const scanQRCode = () => {
 </template>
 
 <style scoped>
-.main {
-  min-height: 320px;
-  place-items: center;
-}
-
 h1 {
   font-size: 3rem;
   font-weight: 500;
@@ -129,5 +125,14 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.hint{
+  color: #4d4d4d;
+  text-align: center;
+}
+.btn{
+  margin-top: 10px;
+  width: 100%;
 }
 </style>

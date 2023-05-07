@@ -15,7 +15,9 @@ chatroom.getChatroomQrcode().then((res) => {
 </script>
 
 <template>
-  <el-card :body-style="{ padding: '0px' }">
+  <div class="main">
+    <div class="header"></div>
+    <el-card :body-style="{ padding: '0px' }">
     <el-image v-loading="loading" :src="qrcode" class="image">
       <template #placeholder>
         <div class="image-slot">Loading<span class="dot">...</span></div>
@@ -26,13 +28,16 @@ chatroom.getChatroomQrcode().then((res) => {
       <el-alert :title="errorMessage" type="error" />
     </div>
   </el-card>
+  </div>
+
 </template>
 
 <style scoped>
 .image {
-  width: 100%;
+  width: fit-content;
   height: 400px;
   display: block;
+  margin: 1rem;
 }
 .image-slot {
   display: flex;

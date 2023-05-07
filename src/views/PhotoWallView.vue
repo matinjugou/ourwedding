@@ -120,7 +120,7 @@ photoWall.freshPhotoList()
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: #67c23a;
+  background-color: #e3a40091;
   color: white;
   font-size: 30px;
   display: flex;

@@ -9,7 +9,7 @@ guestInfo.init()
 <template>
   <RouterView />
   <RouterLink to="/">
-    <i id="home-btn">
+    <i :class="this.$route.name === 'bulletin'?'home-btn home-btn-top':'home-btn'">
       <HomeIcon />
     </i>
   </RouterLink>
@@ -40,19 +40,23 @@ header .wrapper {
   display: none;
 }
 
-#home-btn {
+.home-btn {
   position: fixed;
   bottom: 20px;
   right: 20px;
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: var(--color-heading);
+  /* background-color: var(--color-heading); */
+  background-color: #69839d9e;
   color: white;
   font-size: 30px;
   display: flex;
   place-items: center;
   place-content: center;
+}
+.home-btn-top{
+  top: 20px;
 }
 
 @media (min-width: 1024px) {
