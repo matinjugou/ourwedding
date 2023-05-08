@@ -23,8 +23,7 @@ const guestLogout = () => {
     </div>
   </header>
   <Transition name="fade" mode="out-in">
-    <!-- <div v-if="guestInfo.logined"> -->
-    <div class="home-menu-container">
+    <div v-if="guestInfo.logined" class="home-menu-container">
       <div class="home-menu-list">
         <BlockButton index="/checkin">
           <template #icon>
