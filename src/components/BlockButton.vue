@@ -1,5 +1,6 @@
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router';
+import RightIcon from '@/components/icons/IconRight.vue'
 const props = defineProps({
   index: {
     type: String,
@@ -26,7 +27,7 @@ const handleClick = () => {
     <i>
       <slot name="icon"></slot>
     </i>
-    <div>
+    <div style="flex-grow: 1;">
       <h3>
         <slot></slot>
       </h3>
@@ -34,19 +35,26 @@ const handleClick = () => {
         <slot name="details"></slot>
       </div>
     </div>
+    <RightIcon/>
   </div>
 </template>
 
 <style scoped>
 .block-button {
-  margin-top: 2rem;
+  margin-left: 1rem;
   display: flex;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
+  align-items: center;
+  /* border: 1px solid var(--color-border); */
+  /* border-radius: 8px; */
   min-height: 80px;
   align-items: center;
-  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1); */
+  /* background-color: #ececec; */
 }
+.block-button:not(:last-of-type){
+  border-bottom: 1px solid #637078;
+}
+
 
 .block-button:focus {
   outline: none;
@@ -64,17 +72,30 @@ const handleClick = () => {
 
 i {
   display: flex;
-  place-items: center;
+  /* place-items: center; */
   place-content: center;
-  min-width: 80px;
-  height: 80px;
-  color: var(--color-text);
+  /* min-width: 80px; */
+  height: fit-content;
+  color: aliceblue;
+  margin-right: 12px;
+  /* color: var(--color-text); */
 }
 
 h3 {
   font-size: 1.2rem;
+  line-height: 24px;
   font-weight: 500;
-  color: var(--color-heading);
+  color: aliceblue;
+  flex-grow: 1;
+  /* color: var(--color-heading); */
+
+}
+
+.right-icon{
+  color: #637078;
+  height: 24px;
+  width: 24px;
+  margin-right: 12px;
 }
 
 @media (min-width: 1024px) {

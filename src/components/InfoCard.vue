@@ -45,10 +45,13 @@ defineProps({
   background-size: cover;
   background-position: center;
   padding: 56.8vh 2rem 2rem;
+  overflow: hidden;
 }
 
 .greetings h1{
-  background-image:linear-gradient(to right, rgb(246 216 127),#ac2c20a6);
+  background-image: url('../assets/gold_bg.jpeg');
+  background-size: contain;
+  background-repeat: repeat;
   -webkit-background-clip:text; 
   -webkit-text-fill-color:transparent;
   width: fit-content;
@@ -56,6 +59,7 @@ defineProps({
   font-weight: 500;
   font-size: 2.6rem;
   line-height: initial;
+  white-space: nowrap;
 }
 
 

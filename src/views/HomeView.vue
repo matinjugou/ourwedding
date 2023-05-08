@@ -19,39 +19,41 @@ const guestLogout = () => {
 <template>
   <header>
     <div class="wrapper">
-      <InfoCard :name="guestInfo.name" :logined="guestInfo.logined" />
+      <InfoCard :name="尹添晴" :logined="guestInfo.logined" />
     </div>
   </header>
   <Transition name="fade" mode="out-in">
-    <div v-if="guestInfo.logined">
-      <BlockButton index="/checkin">
-        <template #icon>
-          <CheckIcon />
-        </template>
-        <template #details> 通过扫描现场二维码签到 </template>
+    <!-- <div v-if="guestInfo.logined"> -->
+    <div class="home-menu-container">
+      <div class="home-menu-list">
+        <BlockButton index="/checkin">
+          <template #icon>
+            <CheckIcon />
+          </template>
+          <template #details> 通过扫描现场二维码签到 </template>
 
-        现场签到
-      </BlockButton>
+          现场签到
+        </BlockButton>
 
-      <BlockButton index="/info">
-        <template #icon>
-          <InfoIcon />
-        </template>
-        <template #details>查询坐席、日程安排</template>
+        <BlockButton index="/info">
+          <template #icon>
+            <InfoIcon />
+          </template>
+          <template #details>查询坐席、日程安排</template>
 
-        信息查询
-      </BlockButton>
+          信息查询
+        </BlockButton>
 
-      <BlockButton index="/bulletin">
-        <template #icon>
-          <BulletInBoardIcon />
-        </template>
-        <template #details> 参与弹幕互动 </template>
+        <BlockButton index="/bulletin">
+          <template #icon>
+            <BulletInBoardIcon />
+          </template>
+          <template #details> 参与弹幕互动 </template>
 
-        弹幕互动
-      </BlockButton>
+          弹幕互动
+        </BlockButton>
 
-      <!--BlockButton index="/chatroom">
+        <!--BlockButton index="/chatroom">
         <template #icon>
           <ChatIcon />
         </template>
@@ -60,23 +62,24 @@ const guestLogout = () => {
         现场聊天室
       </BlockButton-->
 
-      <BlockButton index="/photo/wall">
-        <template #icon>
-          <CameraIcon />
-        </template>
-        <template #details> 与现场观众分享你的留影 </template>
+        <BlockButton index="/photo/wall">
+          <template #icon>
+            <CameraIcon />
+          </template>
+          <template #details> 与现场观众分享你的留影 </template>
 
-        留影叙佳期
-      </BlockButton>
+          留影叙佳期
+        </BlockButton>
 
-      <BlockButton :click-func="guestLogout">
-        <template #icon>
-          <AccountIcon />
-        </template>
-        <template #details> 退出登录状态 </template>
+        <BlockButton :click-func="guestLogout">
+          <template #icon>
+            <AccountIcon />
+          </template>
+          <template #details> 退出登录状态 </template>
 
-        用户登出
-      </BlockButton>
+          用户登出
+        </BlockButton>
+      </div>
     </div>
   </Transition>
 </template>
@@ -90,5 +93,13 @@ const guestLogout = () => {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.home-menu-container {
+  min-height: 100vh;
+}
+
+.home-menu-list{
+  border-bottom: 1px solid #637078;
 }
 </style>
