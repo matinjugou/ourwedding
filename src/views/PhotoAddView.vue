@@ -31,7 +31,6 @@ const createImage = (file) => {
 const uploadPhoto = () => {
   if (!imageSrc.value) return
 
-  console.log('上传图片', imageSrc.value)
   photoStore
     .uploadPhoto(imageSrc.value)
     .then((res) => {

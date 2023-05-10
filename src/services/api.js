@@ -1,8 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: '/api', // 根据自己的项目情况设置
-  timeout: 10000, // 超时时间
+  baseURL: '/api',
   withCredentials: true // 发送请求时携带 cookie
 })
 

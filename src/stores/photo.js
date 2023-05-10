@@ -29,7 +29,10 @@ export const usePhotoStore = defineStore('photo', () => {
   function uploadPhoto(photo) {
     const formData = new FormData()
     formData.append('photo', photo)
-    return api.post('/photo/upload', formData)
+    return api.post(
+      'https://upload-image-wedding-service-adrpqvhysj.cn-hangzhou.fcapp.run',
+      formData
+    )
   }
   return { photoList, freshPhotoList, uploadPhoto }
 })
