@@ -137,73 +137,8 @@ export default [
     type: 'get',
     response: (req) => {
       return {
-        code: 0,
-        data: [
-          {
-            id: '1',
-            author: '秦关',
-            src: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
-            horizontal: true,
-            index: 0
-          },
-          {
-            id: '2',
-            author: '秦关',
-            src: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
-            horizontal: false,
-            index: 1
-          },
-          {
-            id: '3',
-            author: '秦关',
-            src: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
-            horizontal: true,
-            index: 2
-          },
-          {
-            id: '4',
-            author: '秦关',
-            src: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
-            horizontal: false,
-            index: 3
-          },
-          {
-            id: '5',
-            author: '秦关',
-            src: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
-            horizontal: false,
-            index: 4
-          },
-          {
-            id: '6',
-            author: '秦关',
-            src: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
-            horizontal: false,
-            index: 5
-          },
-          {
-            id: '7',
-            author: '秦关',
-            src: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
-            horizontal: false,
-            index: 6
-          },
-          {
-            id: '8',
-            author: '秦关',
-            src: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
-            horizontal: true,
-            index: 7
-          },
-          {
-            id: '9',
-            author: '秦关',
-            src: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png',
-            horizontal: true,
-            index: 8
-          }
-        ],
-        msg: ''
+        data: ['202305111647374SLPF5_H.jpeg', '20230511164654LSAL7X_V.jpeg'],
+        status: 'success'
       }
     }
   },

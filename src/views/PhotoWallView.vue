@@ -69,9 +69,9 @@ photoWall.freshPhotoList()
     <div v-for="row in photoRows" :key="row.id" class="photo-row">
       <img
         v-for="(photo, index) in row.photos"
-        :key="photo.id"
-        :src="photo.src"
-        :alt="photo.title"
+        :key="photo.filename"
+        :src="`https://list-image-wedding-service-xugrxextbe.cn-hangzhou.fcapp.run/image?filename=${photo.filename}`"
+        :alt="photo.filename"
         :class="{ horizontal: photo.horizontal, vertical: !photo.horizontal }"
         :style="[photoStyle(row, photo), fadeInDelay(index)]"
       />
