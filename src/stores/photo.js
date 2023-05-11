@@ -3,13 +3,14 @@ import { defineStore } from 'pinia'
 import api from '@/services/api'
 
 export const usePhotoStore = defineStore('photo', () => {
-  const photoList = reactive([])
+  const photoList = ref([])
   function freshPhotoList() {
     let apiRes = null
-    if (photoList.values.length === 0) {
+    console.log(photoList.value)
+    if (photoList.value.length === 0) {
       apiRes = api.get('https://list-image-wedding-service-xugrxextbe.cn-hangzhou.fcapp.run/list')
     } else {
-      const oldestTime = photoList.values[-1].time
+      const oldestTime = photoList.value.slice(-1)[0].time
       apiRes = api.get(
         `https://list-image-wedding-service-xugrxextbe.cn-hangzhou.fcapp.run/list?time=${oldestTime}`
       )
@@ -17,7 +18,7 @@ export const usePhotoStore = defineStore('photo', () => {
     apiRes
       .then((res) => {
         for (const photoname of res.data.data) {
-          photoList.push({
+          photoList.value.push({
             filename: photoname,
             time: photoname.slice(0, 14),
             horizontal: photoname.slice(21, 22) === 'H'
