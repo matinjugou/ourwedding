@@ -37,7 +37,6 @@ export default [
     url: '/api/guest/verify',
     type: 'get',
     response: (req) => {
-      console.log(req.query.username)
       if (req.query.uniqueId === '123456' && req.query.username === '黄超') {
         return {
           code: 0,

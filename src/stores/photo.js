@@ -6,7 +6,6 @@ export const usePhotoStore = defineStore('photo', () => {
   const photoList = ref([])
   function freshPhotoList() {
     let apiRes = null
-    console.log(photoList.value)
     if (photoList.value.length === 0) {
       apiRes = api.get('https://list-image-wedding-service-xugrxextbe.cn-hangzhou.fcapp.run/list')
     } else {

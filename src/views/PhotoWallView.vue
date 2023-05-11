@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { usePhotoStore } from '@/stores/photo.js'
 import AddIcon from '@/components/icons/IconAdd.vue'
+import RefreshIcon from '@/components/icons/IconRefresh.vue'
 
 const photoWall = usePhotoStore()
 const photoRows = computed(() => {
@@ -77,6 +78,9 @@ photoWall.freshPhotoList()
       />
     </div>
   </div>
+  <i id="fresh-btn" @click="photoWall.freshPhotoList()">
+    <RefreshIcon />
+  </i>
   <RouterLink to="/photo/add">
     <i id="add-btn">
       <AddIcon />
@@ -121,6 +125,21 @@ photoWall.freshPhotoList()
   height: 60px;
   border-radius: 50%;
   background-color: #e3a40091;
+  color: white;
+  font-size: 30px;
+  display: flex;
+  place-items: center;
+  place-content: center;
+}
+
+#fresh-btn {
+  position: fixed;
+  bottom: 180px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #02679a6b;
   color: white;
   font-size: 30px;
   display: flex;

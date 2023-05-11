@@ -12,7 +12,6 @@ const uniqueId = route.query.uniqueId
 
 function verify() {
   guestInfo.verify(uniqueId, username.value).then((res) => {
-    console.log(res)
     if (res.data.code === 0) {
       guestInfo.login(res.data.data)
       router.push('/')
@@ -23,7 +22,6 @@ function verify() {
 }
 
 function checkUniqueId() {
-  console.log(uniqueId)
   return uniqueId
 }
 </script>
@@ -32,17 +30,17 @@ function checkUniqueId() {
   <div class="main">
     <div class="header"></div>
     <el-card class="card_form" v-if="checkUniqueId()">
-      <template #header> <h3>请输入姓名以验证身份</h3>  </template>
+      <template #header> <h3>请输入姓名以验证身份</h3> </template>
       <el-form ref="loginForm" label-width="0px">
         <el-form-item>
           <el-input v-model="username" placeholder="姓名" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="verify" style="width: 100%;">登录</el-button>
+          <el-button type="primary" @click="verify" style="width: 100%">登录</el-button>
         </el-form-item>
       </el-form>
     </el-card>
-    <el-card v-else style="text-align: center;">
+    <el-card v-else style="text-align: center">
       <span>验证失败，请确认二维码正确</span>
     </el-card>
   </div>
