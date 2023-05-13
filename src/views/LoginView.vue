@@ -8,28 +8,30 @@ const route = useRoute()
 const router = useRouter()
 const guestInfo = useGuestInfoStore()
 const username = ref('')
-const uniqueId = route.query.uniqueId
+const inviteCode = route.query.invite_code
 
 function verify() {
-  guestInfo.verify(uniqueId, username.value).then((res) => {
-    if (res.data.code === 0) {
+  guestInfo
+    .verify(inviteCode, username.value)
+    .then((res) => {
+      ElMessage.success('登录成功')
       guestInfo.login(res.data.data)
       router.push('/')
-    } else {
-      ElMessage.error(res.data.msg)
-    }
-  })
+    })
+    .catch((err) => {
+      ElMessage.error(err.response.data.message)
+    })
 }
 
-function checkUniqueId() {
-  return uniqueId
+function checkInviteCode() {
+  return inviteCode
 }
 </script>
 
 <template>
   <div class="main">
     <div class="header"></div>
-    <el-card class="card_form" v-if="checkUniqueId()">
+    <el-card class="card_form" v-if="checkInviteCode()">
       <template #header> <h3>请输入姓名以验证身份</h3> </template>
       <el-form ref="loginForm" label-width="0px">
         <el-form-item>

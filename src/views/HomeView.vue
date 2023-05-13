@@ -19,7 +19,7 @@ const guestLogout = () => {
 <template>
   <header>
     <div class="wrapper">
-      <InfoCard :name="尹添晴" :logined="guestInfo.logined" />
+      <InfoCard :name="guestInfo.userInfo.name" :logined="guestInfo.logined" />
     </div>
   </header>
   <Transition name="fade" mode="out-in">
@@ -98,7 +98,7 @@ const guestLogout = () => {
   min-height: 100vh;
 }
 
-.home-menu-list{
+.home-menu-list {
   border-bottom: 1px solid #637078;
 }
 </style>

@@ -19,7 +19,7 @@ const sendDanmu = () => {
   <div class="danmu-page">
     <div class="border-bg"></div>
     <div class="danmu-history-container">
-      <h1 class="danmu-title">留言板</h1>
+      <h1 class="danmu-title">弹幕墙</h1>
       <div v-for="danmu in danmuList" :key="danmu.id" class="danmu-item">
         {{ danmu.text }}
       </div>
@@ -38,10 +38,7 @@ const sendDanmu = () => {
 </template>
 
 <style scoped>
-.danmu-page+.home-btn{
- top:20px !important;
-}
-.border-bg{
+.border-bg {
   background-image: url('../assets/border_bg.png');
   width: 100%;
   height: calc(100% - 50px);
@@ -66,14 +63,14 @@ const sendDanmu = () => {
   padding: 15px 10%;
 }
 
-.danmu-title{
+.danmu-title {
   text-align: center;
-    line-height: 5rem;
-    color: #dea610;
-    font-weight: 500;
-    font-size: 2.2rem;
-    font-family: '阿里妈妈数智体 VF Regular';
-    letter-spacing: 3px;
+  line-height: 5rem;
+  color: #dea610;
+  font-weight: 500;
+  font-size: 2.2rem;
+  font-family: '阿里妈妈数智体 VF Regular';
+  letter-spacing: 3px;
 }
 .danmu-item {
   padding: 10px;

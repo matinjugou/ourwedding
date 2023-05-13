@@ -71,7 +71,7 @@ photoWall.freshPhotoList()
       <img
         v-for="(photo, index) in row.photos"
         :key="photo.filename"
-        :src="`https://list-image-wedding-service-xugrxextbe.cn-hangzhou.fcapp.run/image?filename=${photo.filename}`"
+        :src="`https://fetch-image-wedding-service-lbsvieakmw.cn-beijing.fcapp.run/image?filename=${photo.filename}`"
         :alt="photo.filename"
         :class="{ horizontal: photo.horizontal, vertical: !photo.horizontal }"
         :style="[photoStyle(row, photo), fadeInDelay(index)]"
@@ -119,8 +119,8 @@ photoWall.freshPhotoList()
 
 #add-btn {
   position: fixed;
-  bottom: 100px;
-  right: 20px;
+  bottom: 140px;
+  right: 10px;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -134,8 +134,8 @@ photoWall.freshPhotoList()
 
 #fresh-btn {
   position: fixed;
-  bottom: 180px;
-  right: 20px;
+  bottom: 220px;
+  right: 10px;
   width: 60px;
   height: 60px;
   border-radius: 50%;

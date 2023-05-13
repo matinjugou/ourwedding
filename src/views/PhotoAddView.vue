@@ -115,8 +115,8 @@ const uploadPhoto = () => {
 
 #return-btn {
   position: fixed;
-  bottom: 100px;
-  right: 20px;
+  bottom: 140px;
+  right: 10px;
   width: 60px;
   height: 60px;
   border-radius: 50%;

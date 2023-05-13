@@ -9,7 +9,7 @@ guestInfo.init()
 <template>
   <RouterView />
   <RouterLink to="/">
-    <i :class="this.$route.name === 'bulletin'?'home-btn home-btn-top':'home-btn'">
+    <i class="home-btn">
       <HomeIcon />
     </i>
   </RouterLink>
@@ -42,8 +42,8 @@ header .wrapper {
 
 .home-btn {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 60px;
+  right: 10px;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -55,7 +55,7 @@ header .wrapper {
   place-items: center;
   place-content: center;
 }
-.home-btn-top{
+.home-btn-top {
   top: 20px;
 }
 

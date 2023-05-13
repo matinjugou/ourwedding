@@ -5,30 +5,7 @@ import { Camera } from '@element-plus/icons-vue'
 import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue3-qrcode-reader'
 import { ElMessage } from 'element-plus'
 
-const loading = ref(true)
 const guestInfo = useGuestInfoStore()
-const checkedInStatus = reactive({
-  index: 0,
-  time: 0,
-  status: false
-})
-const checkIfUserCheckedIn = () => {
-  guestInfo
-    .getCheckedInStatus()
-    .then((res) => {
-      if (res.status === 200) {
-        checkedInStatus.index = res.data.index
-        checkedInStatus.time = res.data.time
-        checkedInStatus.status = res.data.status
-      }
-    })
-    .finally(() => {
-      loading.value = false
-    })
-}
-checkIfUserCheckedIn()
-
-const scenarioCode = ref('')
 const errorMessage = ref('')
 const qrCodeScanner = ref(false)
 const onInit = async function (promise) {
@@ -54,17 +31,15 @@ const onInit = async function (promise) {
 }
 const onDecode = (result) => {
   qrCodeScanner.value = false
-  scenarioCode.value = result
-  guestInfo.checkin(scenarioCode.value).then((res) => {
-    if (res.data.code === 0) {
-      checkedInStatus.index = res.data.data.index
-      checkedInStatus.time = res.data.data.time
-      checkedInStatus.status = res.data.data.status
-    } else {
-      errorMessage.value = res.data.msg
-      ElMessage.error(errorMessage.value)
-    }
-  })
+  guestInfo
+    .checkin(result)
+    .then(() => {
+      ElMessage.success('签到成功')
+    })
+    .catch((err) => {
+      errorMessage.value = err.response.data.message
+      ElMessage.error('签到失败：' + errorMessage.value)
+    })
 }
 const scanQRCode = () => {
   qrCodeScanner.value = true
@@ -72,23 +47,23 @@ const scanQRCode = () => {
 </script>
 
 <template>
-  <div v-loading="loading" class="main">
+  <div class="main">
     <div class="header"></div>
-    <div v-if="checkedInStatus.status" class="card">
+    <div v-if="guestInfo.userInfo.checkin" class="card">
       <el-row>
         <el-col :span="24">
           <span>
             您是今天第
-            <h1>{{ checkedInStatus.index }}</h1>
+            <h1>{{ guestInfo.userInfo.checkin_index }}</h1>
             位签到的客人</span
           >
         </el-col>
         <el-col :span="24">
-          <span>签到时间：{{ checkedInStatus.time }}</span>
+          <span>签到时间：{{ guestInfo.userInfo.checkin_time }}</span>
         </el-col>
       </el-row>
     </div>
-    <div v-if="!checkedInStatus.status && !loading" class="card">
+    <div v-if="!guestInfo.userInfo.checkin" class="card">
       <el-row justify="center">
         <el-col :span="24" class="hint">您尚未签到，请扫描现场二维码签到</el-col>
       </el-row>
@@ -110,9 +85,6 @@ h1 {
   font-weight: 500;
   color: var(--color-heading);
 }
-.el-loading-mask {
-  z-index: 9;
-}
 
 .scan-box-fullscreen {
   position: fixed;
@@ -127,11 +99,11 @@ h1 {
   align-items: center;
 }
 
-.hint{
+.hint {
   color: #4d4d4d;
   text-align: center;
 }
-.btn{
+.btn {
   margin-top: 10px;
   width: 100%;
 }

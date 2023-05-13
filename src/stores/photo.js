@@ -7,11 +7,11 @@ export const usePhotoStore = defineStore('photo', () => {
   function freshPhotoList() {
     let apiRes = null
     if (photoList.value.length === 0) {
-      apiRes = api.get('https://list-image-wedding-service-xugrxextbe.cn-hangzhou.fcapp.run/list')
+      apiRes = api.get('https://fetch-image-wedding-service-lbsvieakmw.cn-beijing.fcapp.run/list')
     } else {
       const oldestTime = photoList.value.slice(-1)[0].time
       apiRes = api.get(
-        `https://list-image-wedding-service-xugrxextbe.cn-hangzhou.fcapp.run/list?time=${oldestTime}`
+        `https://fetch-image-wedding-service-lbsvieakmw.cn-beijing.fcapp.run/list?time=${oldestTime}`
       )
     }
     apiRes
@@ -32,7 +32,7 @@ export const usePhotoStore = defineStore('photo', () => {
     const formData = new FormData()
     formData.append('photo', photo)
     return api.post(
-      'https://upload-image-wedding-service-adrpqvhysj.cn-hangzhou.fcapp.run/upload',
+      'https://upload-image-wedding-service-adrpqvhysj.cn-beijing.fcapp.run/upload',
       formData
     )
   }
