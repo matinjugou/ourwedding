@@ -2,11 +2,11 @@
 import { ref, reactive } from 'vue'
 
 const msgInput = ref('')
-const danmuList = reactive([])
+const danmakuList = reactive([])
 
-const sendDanmu = () => {
+const sendDanmaku = () => {
   if (msgInput.value.trim()) {
-    danmuList.push({
+    danmakuList.push({
       id: new Date().getTime(),
       text: msgInput.value.trim()
     })
@@ -16,12 +16,12 @@ const sendDanmu = () => {
 </script>
 
 <template>
-  <div class="danmu-page">
+  <div class="danmaku-page">
     <div class="border-bg"></div>
-    <div class="danmu-history-container">
-      <h1 class="danmu-title">弹幕墙</h1>
-      <div v-for="danmu in danmuList" :key="danmu.id" class="danmu-item">
-        {{ danmu.text }}
+    <div class="danmaku-history-container">
+      <h1 class="danmaku-title">弹幕墙</h1>
+      <div v-for="danmaku in danmakuList" :key="danmaku.id" class="danmaku-item">
+        {{ danmaku.text }}
       </div>
     </div>
     <div class="send-box">
@@ -30,9 +30,9 @@ const sendDanmu = () => {
         class="msg-input"
         placeholder="说点什么..."
         v-model="msgInput"
-        @keyup.enter="sendDanmu"
+        @keyup.enter="sendDanmaku"
       />
-      <button class="send-button" @click="sendDanmu">发送</button>
+      <button class="send-button" @click="sendDanmaku">发送</button>
     </div>
   </div>
 </template>
@@ -45,14 +45,14 @@ const sendDanmu = () => {
   background-size: 100% 100%;
   position: absolute;
 }
-.danmu-page {
+.danmaku-page {
   position: relative;
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
 
-.danmu-history-container {
+.danmaku-history-container {
   padding: 15px;
   padding-bottom: 60px; /* 新增 */
   /* background: #f0f3f4; */
@@ -63,7 +63,7 @@ const sendDanmu = () => {
   padding: 15px 10%;
 }
 
-.danmu-title {
+.danmaku-title {
   text-align: center;
   line-height: 5rem;
   color: #dea610;
@@ -72,7 +72,7 @@ const sendDanmu = () => {
   font-family: '阿里妈妈数智体 VF Regular';
   letter-spacing: 3px;
 }
-.danmu-item {
+.danmaku-item {
   padding: 10px;
   /* text-align: center; */
   margin: 5px 0;
