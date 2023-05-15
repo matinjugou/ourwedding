@@ -1,16 +1,41 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
+import { useDanmakuStore } from '@/stores/danmaku.js'
+import { useGuestInfoStore } from '@/stores/guest.js'
+import { ElMessage } from 'element-plus'
 
 const msgInput = ref('')
 const danmakuList = reactive([])
+const danmakuStore = useDanmakuStore()
+const guestInfo = useGuestInfoStore()
+const lastDanmakuId = computed(() => {
+  if (danmakuList.length > 0) {
+    return danmakuList[danmakuList.length - 1].id
+  } else {
+    return 0
+  }
+})
+
+const freshDanmakuList = (
+  startId = 0,
+  count = 20,
+  legal = 'all',
+  authorId = guestInfo.userInfo.id
+) => {
+  danmakuStore.fetchDanmakuList(startId, count, legal, authorId).then((res) => {
+    danmakuList.push(...res.data)
+  })
+}
+
+freshDanmakuList()
 
 const sendDanmaku = () => {
   if (msgInput.value.trim()) {
-    danmakuList.push({
-      id: new Date().getTime(),
-      text: msgInput.value.trim()
+    danmakuStore.createDanmaku(msgInput.value.trim(), guestInfo.userInfo.id).then(() => {
+      freshDanmakuList(lastDanmakuId.value)
+      msgInput.value = ''
+      ElMessage.success('发送成功')
     })
-    msgInput.value = ''
   }
 }
 </script>
@@ -21,7 +46,7 @@ const sendDanmaku = () => {
     <div class="danmaku-history-container">
       <h1 class="danmaku-title">弹幕墙</h1>
       <div v-for="danmaku in danmakuList" :key="danmaku.id" class="danmaku-item">
-        {{ danmaku.text }}
+        {{ danmaku.content }}
       </div>
     </div>
     <div class="send-box">

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import api from '@/services/api'
 
 export const useDanmakuStore = defineStore('danmaku', () => {
-  const fetchDanmakuList = (startId = 0, count = 10, legal = 'all', authorId = null) => {
+  const fetchDanmakuList = (startId = 0, count = 20, legal = 'all', authorId = null) => {
     return api.get('https://bulletin-board-wedding-service-pbffkjgajx.cn-beijing.fcapp.run/list', {
       params: {
         start_id: startId,
