@@ -22,10 +22,10 @@
   font-display: swap;
 }
 
-/* CDN 服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
 @font-face {
-  font-family: "阿里妈妈数智体 VF Regular";src: url("//at.alicdn.com/wf/webfont/lfs8AjgcpXgl/oy0auxtEUyFR.woff2") format("woff2"),
-  url("//at.alicdn.com/wf/webfont/lfs8AjgcpXgl/owk3tkjgQ2Cg.woff") format("woff");
+  font-family: "阿里妈妈数智体 VF Regular";src: url("//at.alicdn.com/wf/webfont/lfs8AjgcpXgl/TRgJt1irGmjy.woff2") format("woff2"),
+  url("//at.alicdn.com/wf/webfont/lfs8AjgcpXgl/A4a1LzoYQYrs.woff") format("woff");
   font-display: swap;
 }
 
