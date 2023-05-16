@@ -1,27 +1,52 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
+import { useDanmakuStore } from '@/stores/danmaku.js'
+import { useGuestInfoStore } from '@/stores/guest.js'
+import { ElMessage } from 'element-plus'
 
 const msgInput = ref('')
-const danmuList = reactive([])
+const danmakuList = reactive([])
+const danmakuStore = useDanmakuStore()
+const guestInfo = useGuestInfoStore()
+const lastDanmakuId = computed(() => {
+  if (danmakuList.length > 0) {
+    return danmakuList[danmakuList.length - 1].id
+  } else {
+    return 0
+  }
+})
 
-const sendDanmu = () => {
+const freshDanmakuList = (
+  startId = 0,
+  count = 20,
+  legal = 'all',
+  authorId = guestInfo.userInfo.id
+) => {
+  danmakuStore.fetchDanmakuList(startId, count, legal, authorId).then((res) => {
+    danmakuList.push(...res.data)
+  })
+}
+
+freshDanmakuList()
+
+const sendDanmaku = () => {
   if (msgInput.value.trim()) {
-    danmuList.push({
-      id: new Date().getTime(),
-      text: msgInput.value.trim()
+    danmakuStore.createDanmaku(msgInput.value.trim(), guestInfo.userInfo.id).then(() => {
+      freshDanmakuList(lastDanmakuId.value)
+      msgInput.value = ''
+      ElMessage.success('发送成功')
     })
-    msgInput.value = ''
   }
 }
 </script>
 
 <template>
-  <div class="danmu-page">
+  <div class="danmaku-page">
     <div class="border-bg"></div>
-    <div class="danmu-history-container">
-      <h1 class="danmu-title">弹幕墙</h1>
-      <div v-for="danmu in danmuList" :key="danmu.id" class="danmu-item">
-        {{ danmu.text }}
+    <div class="danmaku-history-container">
+      <h1 class="danmaku-title">弹幕墙</h1>
+      <div v-for="danmaku in danmakuList" :key="danmaku.id" class="danmaku-item">
+        {{ danmaku.content }}
       </div>
     </div>
     <div class="send-box">
@@ -30,9 +55,9 @@ const sendDanmu = () => {
         class="msg-input"
         placeholder="说点什么..."
         v-model="msgInput"
-        @keyup.enter="sendDanmu"
+        @keyup.enter="sendDanmaku"
       />
-      <button class="send-button" @click="sendDanmu">发送</button>
+      <button class="send-button" @click="sendDanmaku">发送</button>
     </div>
   </div>
 </template>
@@ -45,14 +70,14 @@ const sendDanmu = () => {
   background-size: 100% 100%;
   position: absolute;
 }
-.danmu-page {
+.danmaku-page {
   position: relative;
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
 
-.danmu-history-container {
+.danmaku-history-container {
   padding: 15px;
   padding-bottom: 60px; /* 新增 */
   /* background: #f0f3f4; */
@@ -63,7 +88,7 @@ const sendDanmu = () => {
   padding: 15px 10%;
 }
 
-.danmu-title {
+.danmaku-title {
   text-align: center;
   line-height: 5rem;
   color: #dea610;
@@ -72,7 +97,7 @@ const sendDanmu = () => {
   font-family: '阿里妈妈数智体 VF Regular';
   letter-spacing: 3px;
 }
-.danmu-item {
+.danmaku-item {
   padding: 10px;
   /* text-align: center; */
   margin: 5px 0;
