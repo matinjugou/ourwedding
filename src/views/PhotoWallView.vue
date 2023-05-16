@@ -1,80 +1,95 @@
 <script setup>
-import { ref, computed } from 'vue'
+// import { ref, computed } from 'vue'
 import { usePhotoStore } from '@/stores/photo.js'
 import AddIcon from '@/components/icons/IconAdd.vue'
 import RefreshIcon from '@/components/icons/IconRefresh.vue'
 
 const photoWall = usePhotoStore()
-const photoRows = computed(() => {
-  const result = []
 
-  photoWall.photoList.forEach((photo) => {
-    const targetRow = result.find((row) => {
-      const newRowWidth = row.width + photoWidth(photo)
-      if (newRowWidth > 100) {
-        return false
-      }
+// const photoRows = computed(() => {
+//   const result = []
 
-      const newHorizontalCount = row.horizontalCount + (photo.horizontal ? 1 : 0)
-      const newVerticalCount = row.verticalCount + (photo.horizontal ? 0 : 1)
+//   photoWall.photoList.forEach((photo) => {
+//     const targetRow = result.find((row) => {
+//       const newRowWidth = row.width + photoWidth(photo)
+//       if (newRowWidth > 100) {
+//         return false
+//       }
 
-      if (newHorizontalCount <= 2 && newVerticalCount <= 3) {
-        return true
-      }
+//       const newHorizontalCount = row.horizontalCount + (photo.horizontal ? 1 : 0)
+//       const newVerticalCount = row.verticalCount + (photo.horizontal ? 0 : 1)
 
-      return false
-    })
+//       if (newHorizontalCount <= 2 && newVerticalCount <= 3) {
+//         return true
+//       }
 
-    if (targetRow) {
-      targetRow.photos.push(photo)
-      targetRow.width += photoWidth(photo)
-      targetRow.horizontalCount += photo.horizontal ? 1 : 0
-      targetRow.verticalCount += photo.horizontal ? 0 : 1
-    } else {
-      const newRow = {
-        id: result.length,
-        photos: [photo],
-        width: photoWidth(photo),
-        horizontalCount: photo.horizontal ? 1 : 0,
-        verticalCount: photo.horizontal ? 0 : 1
-      }
-      result.push(newRow)
-    }
-  })
+//       return false
+//     })
 
-  function photoWidth(photo) {
-    return photo.horizontal ? 50 : 30
-  }
+//     if (targetRow) {
+//       targetRow.photos.push(photo)
+//       targetRow.width += photoWidth(photo)
+//       targetRow.horizontalCount += photo.horizontal ? 1 : 0
+//       targetRow.verticalCount += photo.horizontal ? 0 : 1
+//     } else {
+//       const newRow = {
+//         id: result.length,
+//         photos: [photo],
+//         width: photoWidth(photo),
+//         horizontalCount: photo.horizontal ? 1 : 0,
+//         verticalCount: photo.horizontal ? 0 : 1
+//       }
+//       result.push(newRow)
+//     }
+//   })
 
-  return result
-})
+//   function photoWidth(photo) {
+//     return photo.horizontal ? 50 : 30
+//   }
+
+//   return result
+// })
+
 const fadeInDelay = (index) => {
   return {
     animationDelay: `${0.1 * (index + 1)}s`
   }
 }
-const photoStyle = (row, photo) => {
-  if (photo.horizontal && row.horizontalCount === 1 && row.verticalCount === 1) {
-    return { width: 'calc(100% - 30% - 10px)', height: '100px' }
-  } else if (!photo.horizontal && row.horizontalCount === 1 && row.verticalCount === 1) {
-    return { width: '30%', height: '100px' }
-  } else {
-    return { width: photo.horizontal ? '50%' : '30%', height: '100px' }
-  }
+
+const even = (arr)=>{
+  return arr.filter((_,index)=>{
+    return index%2 === 0;
+  })
+}
+
+const odd = (arr) =>{
+  return arr.filter((_,index)=>{
+    return index%2 === 1;
+  })
 }
 photoWall.freshPhotoList()
 </script>
 
 <template>
   <div class="photo-wall">
-    <div v-for="row in photoRows" :key="row.id" class="photo-row">
-      <img
-        v-for="(photo, index) in row.photos"
+      <div class="waterfall-half">
+        <img
+        v-for="(photo, index) in odd(photoWall.photoList)"
         :key="photo.filename"
         :src="`https://fetch-image-wedding-service-lbsvieakmw.cn-beijing.fcapp.run/image?filename=${photo.filename}`"
         :alt="photo.filename"
-        :class="{ horizontal: photo.horizontal, vertical: !photo.horizontal }"
-        :style="[photoStyle(row, photo), fadeInDelay(index)]"
+        class="photo-item"
+        :style="[fadeInDelay(index)]"
+      />
+      </div>
+      <div class="waterfall-half">
+        <img
+        v-for="(photo, index) in even(photoWall.photoList)"
+        :key="photo.filename"
+        :src="`https://fetch-image-wedding-service-lbsvieakmw.cn-beijing.fcapp.run/image?filename=${photo.filename}`"
+        :alt="photo.filename"
+        class="photo-item"
+        :style="[fadeInDelay(index)]"
       />
     </div>
   </div>
@@ -91,16 +106,11 @@ photoWall.freshPhotoList()
 <style scoped>
 .photo-wall {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-direction: row;
+  width: 100%;
+  padding: 0.5rem;
 }
 
-.photo-row {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  justify-content: space-between;
-}
 @keyframes fade-in {
   0% {
     opacity: 0;
@@ -110,7 +120,7 @@ photoWall.freshPhotoList()
   }
 }
 
-.photo-row img {
+.waterfall-half img {
   animation-name: fade-in;
   animation-duration: 0.5s;
   animation-timing-function: ease-out;
@@ -145,5 +155,19 @@ photoWall.freshPhotoList()
   display: flex;
   place-items: center;
   place-content: center;
+}
+.waterfall-half {
+    width: 50%;
+    -webkit-box-flex: 1;
+    -ms-flex: auto;
+    flex: auto;
+}
+.waterfall-half:first-child {
+    margin: 0 0.5rem 0 0;
+}
+
+.photo-item{
+  width: 100%;
+  border-radius: 1rem;
 }
 </style>
