@@ -4,29 +4,46 @@ import api from '@/services/api'
 
 export const usePhotoStore = defineStore('photo', () => {
   const photoList = ref([])
-  function freshPhotoList() {
-    let apiRes = null
-    if (photoList.value.length === 0) {
-      apiRes = api.get('https://fetch-image-wedding-service-lbsvieakmw.cn-beijing.fcapp.run/list')
-    } else {
-      const oldestTime = photoList.value.slice(-1)[0].time
-      apiRes = api.get(
-        `https://fetch-image-wedding-service-lbsvieakmw.cn-beijing.fcapp.run/list?time=${oldestTime}`
-      )
+  function convertResToPhotoList(res) {
+    const resPhotoList = []
+    for (const photoname of res.data.data) {
+      resPhotoList.push({
+        filename: photoname,
+        time: photoname.slice(14, 28),
+        horizontal: photoname.slice(35, 36) === 'H'
+      })
     }
-    apiRes
+    return resPhotoList
+  }
+  function getNewestPhoto() {
+    const newestTime = photoList.value.length > 0 ? photoList.value[0].time : ''
+    api
+      .get(
+        `https://fetch-image-wedding-service-lbsvieakmw.cn-beijing.fcapp.run/list_guest_images?time=${newestTime}`
+      )
       .then((res) => {
-        for (const photoname of res.data.data) {
-          photoList.value.push({
-            filename: photoname,
-            time: photoname.slice(0, 14),
-            horizontal: photoname.slice(21, 22) === 'H'
-          })
+        const tmpPhotoList = convertResToPhotoList(res).reverse()
+        for (const photo of tmpPhotoList) {
+          photoList.value.unshift(photo)
         }
       })
-      .catch(() => {
-        return false
+  }
+  function getOlderPhoto() {
+    const oldestTime = photoList.value.length > 0 ? photoList.value.slice(-1)[0].time : ''
+    api
+      .get(
+        `https://fetch-image-wedding-service-lbsvieakmw.cn-beijing.fcapp.run/list_guest_images?time=${oldestTime}`
+      )
+      .then((res) => {
+        const tmpPhotoList = convertResToPhotoList(res)
+        for (const photo of tmpPhotoList) {
+          photoList.value.push(photo)
+        }
       })
+  }
+  function freshPhotoList() {
+    photoList.value = []
+    getNewestPhoto()
   }
   function uploadPhoto(photo) {
     const formData = new FormData()
@@ -36,5 +53,5 @@ export const usePhotoStore = defineStore('photo', () => {
       formData
     )
   }
-  return { photoList, freshPhotoList, uploadPhoto }
+  return { photoList, freshPhotoList, uploadPhoto, getNewestPhoto, getOlderPhoto }
 })
