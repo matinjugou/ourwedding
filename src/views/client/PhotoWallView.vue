@@ -1,5 +1,5 @@
 <script setup>
-// import { ref, computed } from 'vue'
+import { onMounted } from 'vue'
 import { usePhotoStore } from '@/stores/photo.js'
 import AddIcon from '@/components/icons/IconAdd.vue'
 import ZoomInOutImage from '@/components/ZoomInOutImage.vue'
@@ -28,6 +28,10 @@ function loadImage() {
   photoWall.getOlderPhoto()
 }
 
+onMounted(() => {
+  loadImage()
+})
+
 function imageSrc(filename) {
   if (process.env.NODE_ENV === 'development') {
     return `https://fetch-image-wedding-service-lbsvieakmw.cn-beijing.fcapp.run/image?filename=${filename}`
@@ -38,7 +42,7 @@ function imageSrc(filename) {
 </script>
 
 <template>
-  <div class="photo-wall" v-infinite-scroll="loadImage">
+  <div class="photo-wall" v-infinite-scroll="loadImage" :infinite-scroll-immediate="false">
     <div class="waterfall-half">
       <ZoomInOutImage
         v-for="(photo, index) in odd(photoWall.photoList)"
