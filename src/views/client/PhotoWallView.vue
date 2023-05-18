@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted } from 'vue'
 import { usePhotoStore } from '@/stores/photo.js'
 import AddIcon from '@/components/icons/IconAdd.vue'
 import ZoomInOutImage from '@/components/ZoomInOutImage.vue'
@@ -26,6 +27,10 @@ const odd = (arr) => {
 function loadImage() {
   photoWall.getOlderPhoto()
 }
+
+onMounted(() => {
+  loadImage()
+})
 
 function imageSrc(filename) {
   if (process.env.NODE_ENV === 'development') {
