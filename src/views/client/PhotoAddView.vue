@@ -5,6 +5,7 @@ import { usePhotoStore } from '@/stores/photo.js'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 
+const uploading = ref(false)
 const router = useRouter()
 const photoStore = usePhotoStore()
 const photoInput = ref(null)
@@ -30,6 +31,7 @@ const createImage = (file) => {
 
 const uploadPhoto = () => {
   if (!imageSrc.value) return
+  uploading.value = true
 
   photoStore
     .uploadPhoto(imageSrc.value)
@@ -39,6 +41,9 @@ const uploadPhoto = () => {
     })
     .catch((err) => {
       ElMessage.error('上传失败')
+    })
+    .finally(() => {
+      uploading.value = false
     })
 }
 </script>
@@ -57,7 +62,7 @@ const uploadPhoto = () => {
       <img v-else :src="imageSrc" alt="预览" />
     </div>
     <div v-if="imageSrc" class="upload-button-container">
-      <el-button @click="uploadPhoto" type="success" round>上传</el-button>
+      <el-button @click="uploadPhoto" type="success" round :loading="uploading">上传</el-button>
     </div>
   </div>
   <RouterLink to="/photo/wall">

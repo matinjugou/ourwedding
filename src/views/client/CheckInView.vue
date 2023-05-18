@@ -74,7 +74,11 @@ const scanQRCode = () => {
   </div>
   <div class="scan-box-fullscreen" v-if="qrCodeScanner">
     <qrcode-drop-zone>
-      <qrcode-stream @decode="onDecode" @init="onInit" camera="front" />
+      <qrcode-stream
+        @decode="onDecode"
+        @init="onInit"
+        :camera="process.env.NODE_ENV === 'development' ? 'front' : 'back'"
+      />
     </qrcode-drop-zone>
   </div>
 </template>

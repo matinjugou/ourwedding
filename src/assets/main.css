@@ -1,31 +1,35 @@
 @import './base.css';
 
 @font-face {
-  font-family: "阿里妈妈东方大楷 Regular";
+  font-family: '阿里妈妈东方大楷 Regular';
   font-weight: 400;
-  src: url("./Alimama_DongFangDaKai_Regular.woff2") format("woff2"),
-  url("./Alimama_DongFangDaKai_Regular.woff2") format("woff");
+  src: url('./Alimama_DongFangDaKai_Regular.woff2') format('woff2'),
+    url('./Alimama_DongFangDaKai_Regular.woff2') format('woff');
   font-display: swap;
 }
 
 /* CDN 服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
 @font-face {
-  font-family: "阿里妈妈数智体 VF Regular";src: url("//at.alicdn.com/wf/webfont/lfs8AjgcpXgl/f7DOHU3wtNwU.woff2") format("woff2"),
-  url("//at.alicdn.com/wf/webfont/lfs8AjgcpXgl/daSCMerxKX0t.woff") format("woff");
+  font-family: '阿里妈妈数智体 VF Regular';
+  src: url('//at.alicdn.com/wf/webfont/lfs8AjgcpXgl/f7DOHU3wtNwU.woff2') format('woff2'),
+    url('//at.alicdn.com/wf/webfont/lfs8AjgcpXgl/daSCMerxKX0t.woff') format('woff');
   font-display: swap;
 }
 
 /* CDN 服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
 @font-face {
-  font-family: "阿里巴巴普惠体 2.0 35 Thin";font-weight: 250;src: url("//at.alicdn.com/wf/webfont/lfs8AjgcpXgl/aOScq1AlrAWq.woff2") format("woff2"),
-  url("//at.alicdn.com/wf/webfont/lfs8AjgcpXgl/lZ2Wczbq7Oya.woff") format("woff");
+  font-family: '阿里巴巴普惠体 2.0 35 Thin';
+  font-weight: 250;
+  src: url('//at.alicdn.com/wf/webfont/lfs8AjgcpXgl/aOScq1AlrAWq.woff2') format('woff2'),
+    url('//at.alicdn.com/wf/webfont/lfs8AjgcpXgl/lZ2Wczbq7Oya.woff') format('woff');
   font-display: swap;
 }
 
 /* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
 @font-face {
-  font-family: "阿里妈妈数智体 VF Regular";src: url("//at.alicdn.com/wf/webfont/lfs8AjgcpXgl/TRgJt1irGmjy.woff2") format("woff2"),
-  url("//at.alicdn.com/wf/webfont/lfs8AjgcpXgl/A4a1LzoYQYrs.woff") format("woff");
+  font-family: '阿里妈妈数智体 VF Regular';
+  src: url('//at.alicdn.com/wf/webfont/lfs8AjgcpXgl/TRgJt1irGmjy.woff2') format('woff2'),
+    url('//at.alicdn.com/wf/webfont/lfs8AjgcpXgl/A4a1LzoYQYrs.woff') format('woff');
   font-display: swap;
 }
 
@@ -33,7 +37,7 @@
   max-width: 1280px;
   margin: 0 auto;
   font-weight: normal;
-  background-color:rgb(23, 60, 91);
+  background-color: rgb(23, 60, 91);
   min-height: 100vh;
 }
 
@@ -72,19 +76,19 @@ a,
   overflow-y: auto;
 }
 
-.header{
+.header {
   position: relative;
   left: -15%;
   width: 130%;
   height: 25%;
   background-position: bottom;
-  background-image: url('../assets/bg.png');
-  border-radius:0 0 45% 45%;
+  background-image: url('@/assets/bg.png');
+  border-radius: 0 0 45% 45%;
   margin-bottom: -15%;
   background-size: cover;
 }
 
-.card{
+.card {
   margin: 1rem;
   background-color: #ececec;
   border-radius: 1rem;
@@ -93,17 +97,17 @@ a,
 
 .el-button--primary {
   --el-button-bg-color: rgb(23, 60, 91);
-  --el-button-border-color:rgb(23, 60, 91);
+  --el-button-border-color: rgb(23, 60, 91);
 }
 
-.el-card{
+.el-card {
   margin: 0 1rem 1rem;
-  border-radius: 1rem; 
+  border-radius: 1rem;
   background-color: #ececec;
   -el-card-border-color: #d3d3d3;
 }
 
-img{
+img {
   object-fit: contain;
 }
 
@@ -118,15 +122,15 @@ img{
   text-align: center;
 }
 
-.el-card__body .el-form{
+.el-card__body .el-form {
   margin-bottom: -20px;
 }
 
-.info-block .el-card__body::before{
+.info-block .el-card__body::before {
   display: block;
-  content:'';
+  content: '';
   width: 100%;
-  background-image: url('../assets/border.png');
+  background-image: url('@/assets/border.png');
   height: 2rem;
   background-position: center;
   object-fit: cover;

@@ -4,6 +4,7 @@ import api from '@/services/api'
 
 export const usePhotoStore = defineStore('photo', () => {
   const photoList = ref([])
+  let lock = false
   function convertResToPhotoList(res) {
     const resPhotoList = []
     for (const photoname of res.data.data) {
@@ -15,7 +16,12 @@ export const usePhotoStore = defineStore('photo', () => {
     }
     return resPhotoList
   }
-  function getNewestPhoto() {
+  function getNewestPhoto(done) {
+    if (lock) {
+      return
+    } else {
+      lock = true
+    }
     const newestTime = photoList.value.length > 0 ? photoList.value[0].time : ''
     api
       .get(
@@ -26,9 +32,18 @@ export const usePhotoStore = defineStore('photo', () => {
         for (const photo of tmpPhotoList) {
           photoList.value.unshift(photo)
         }
+        lock = false
+        if (done) {
+          done()
+        }
       })
   }
-  function getOlderPhoto() {
+  function getOlderPhoto(done) {
+    if (lock) {
+      return
+    } else {
+      lock = true
+    }
     const oldestTime = photoList.value.length > 0 ? photoList.value.slice(-1)[0].time : ''
     api
       .get(
@@ -38,6 +53,10 @@ export const usePhotoStore = defineStore('photo', () => {
         const tmpPhotoList = convertResToPhotoList(res)
         for (const photo of tmpPhotoList) {
           photoList.value.push(photo)
+        }
+        lock = false
+        if (done) {
+          done()
         }
       })
   }

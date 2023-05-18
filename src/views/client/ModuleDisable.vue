@@ -6,11 +6,12 @@ import IconInfo from '@/components/icons/IconInfo.vue'
   <div class="module-disable main">
     <div class="header"></div>
     <div class="disable-card card">
-      <img class="disable-image" src="../assets/disabled.png" />
+      <img class="disable-image" src="@/assets/disabled.png" />
       <div class="module-disable__title">
         <div class="module-disable__icon">
           <IconInfo />
-        </div>模块暂未开放，敬请期待
+        </div>
+        模块暂未开放，敬请期待
       </div>
     </div>
   </div>
@@ -25,12 +26,13 @@ import IconInfo from '@/components/icons/IconInfo.vue'
   width: 200px;
 }
 
-.module-disable__title{
+.module-disable__title {
   display: flex;
   justify-content: center;
-  color:#727272;
+  color: #727272;
 }
 
 .module-disable__icon {
   width: max-content;
-}</style>
+}
+</style>

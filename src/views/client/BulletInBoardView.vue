@@ -4,6 +4,7 @@ import { useDanmakuStore } from '@/stores/danmaku.js'
 import { useGuestInfoStore } from '@/stores/guest.js'
 import { ElMessage } from 'element-plus'
 
+const loading = ref(false)
 const msgInput = ref('')
 const danmakuList = reactive([])
 const danmakuStore = useDanmakuStore()
@@ -18,12 +19,14 @@ const lastDanmakuId = computed(() => {
 
 const freshDanmakuList = (
   startId = 0,
-  count = 20,
+  count = 1000,
   legal = 'all',
   authorId = guestInfo.userInfo.id
 ) => {
+  loading.value = true
   danmakuStore.fetchDanmakuList(startId, count, legal, authorId).then((res) => {
     danmakuList.push(...res.data)
+    loading.value = false
   })
 }
 
@@ -43,8 +46,8 @@ const sendDanmaku = () => {
 <template>
   <div class="danmaku-page">
     <div class="border-bg"></div>
-    <div class="danmaku-history-container">
-      <h1 class="danmaku-title">弹幕墙</h1>
+    <div class="danmaku-history-container" v-loading="loading">
+      <h1 class="danmaku-title">历史弹幕</h1>
       <div v-for="danmaku in danmakuList" :key="danmaku.id" class="danmaku-item">
         {{ danmaku.content }}
       </div>
@@ -54,6 +57,7 @@ const sendDanmaku = () => {
         type="text"
         class="msg-input"
         placeholder="说点什么..."
+        :disabled="loading"
         v-model="msgInput"
         @keyup.enter="sendDanmaku"
       />
@@ -64,7 +68,7 @@ const sendDanmaku = () => {
 
 <style scoped>
 .border-bg {
-  background-image: url('../assets/border_bg.png');
+  background-image: url('@/assets/border_bg.png');
   width: 100%;
   height: calc(100% - 50px);
   background-size: 100% 100%;

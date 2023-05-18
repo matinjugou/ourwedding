@@ -2,6 +2,7 @@
 // import { ref, computed } from 'vue'
 import { usePhotoStore } from '@/stores/photo.js'
 import AddIcon from '@/components/icons/IconAdd.vue'
+import ZoomInOutImage from '@/components/ZoomInOutImage.vue'
 
 const photoWall = usePhotoStore()
 
@@ -22,25 +23,37 @@ const odd = (arr) => {
     return index % 2 === 1
   })
 }
+
+function loadImage() {
+  photoWall.getOlderPhoto()
+}
+
+function imageSrc(filename) {
+  if (process.env.NODE_ENV === 'development') {
+    return `https://fetch-image-wedding-service-lbsvieakmw.cn-beijing.fcapp.run/image?filename=${filename}`
+  } else {
+    return filename
+  }
+}
 </script>
 
 <template>
-  <div class="photo-wall" v-infinite-scroll="photoWall.getOlderPhoto">
+  <div class="photo-wall" v-infinite-scroll="loadImage">
     <div class="waterfall-half">
-      <img
+      <ZoomInOutImage
         v-for="(photo, index) in odd(photoWall.photoList)"
         :key="photo.filename"
-        :src="`https://fetch-image-wedding-service-lbsvieakmw.cn-beijing.fcapp.run/image?filename=${photo.filename}`"
+        :src="imageSrc(photo.filename)"
         :alt="photo.filename"
         class="photo-item"
         :style="[fadeInDelay(index)]"
       />
     </div>
     <div class="waterfall-half">
-      <img
+      <ZoomInOutImage
         v-for="(photo, index) in even(photoWall.photoList)"
         :key="photo.filename"
-        :src="`https://fetch-image-wedding-service-lbsvieakmw.cn-beijing.fcapp.run/image?filename=${photo.filename}`"
+        :src="imageSrc(photo.filename)"
         :alt="photo.filename"
         class="photo-item"
         :style="[fadeInDelay(index)]"
@@ -54,7 +67,7 @@ const odd = (arr) => {
   </RouterLink>
 </template>
 
-<style scoped>
+<style>
 .photo-wall {
   display: flex;
   flex-direction: row;

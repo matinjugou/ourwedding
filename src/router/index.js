@@ -1,9 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import CheckinView from '../views/CheckinView.vue'
-import ChatroomView from '../views/ChatroomView.vue'
-import InfoView from '../views/InfoView.vue'
-import ModuleDisable from '../views/ModuleDisable.vue'
 import api from '@/services/api'
 
 function checkModuleState() {
@@ -24,48 +19,48 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: () => import('../views/client/HomeView.vue')
     },
     {
       path: '/checkin',
       name: 'checkin',
-      component: CheckinView
+      component: () => import('../views/client/CheckinView.vue')
     },
     {
       path: '/chatroom',
       name: 'chatroom',
-      component: ChatroomView,
+      component: () => import('../views/client/ChatroomView.vue'),
       beforeEnter: checkModuleState()
     },
     {
       path: '/info',
       name: 'info',
-      component: InfoView
+      component: () => import('../views/client/InfoView.vue')
     },
     {
       path: '/module-disable',
       name: 'module-disable',
-      component: ModuleDisable
+      component: () => import('../views/client/ModuleDisable.vue')
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import('../views/LoginView.vue')
+      component: () => import('../views/client/LoginView.vue')
     },
     {
       path: '/photo/wall',
       name: 'photoWall',
-      component: () => import('../views/PhotoWallView.vue')
+      component: () => import('../views/client/PhotoWallView.vue')
     },
     {
       path: '/photo/add',
       name: 'photoAdd',
-      component: () => import('../views/PhotoAddView.vue')
+      component: () => import('../views/client/PhotoAddView.vue')
     },
     {
       path: '/bulletin',
       name: 'bulletin',
-      component: () => import('../views/BulletInBoardView.vue')
+      component: () => import('../views/client/BulletInBoardView.vue')
     }
   ]
 })
