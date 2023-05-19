@@ -1,10 +1,21 @@
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { usePhotoStore } from '@/stores/photo.js'
-import AddIcon from '@/components/icons/IconAdd.vue'
+import { useGuestInfoStore } from '@/stores/guest.js'
 import ZoomInOutImage from '@/components/ZoomInOutImage.vue'
+import RefreshIcon from '@/components/icons/IconRefresh.vue'
+import AddIcon from '@/components/icons/IconAdd.vue'
+import CheckbookIcon from '@/components/icons/IconCheckbook.vue'
 
+const loading = ref(false)
 const photoWall = usePhotoStore()
+const guestInfo = useGuestInfoStore()
+
+const isAdmin = ref(false)
+
+guestInfo.adminCheck().then((res) => {
+  isAdmin.value = res.data.data.admin === 1
+})
 
 const fadeInDelay = (index) => {
   return {
@@ -25,7 +36,10 @@ const odd = (arr) => {
 }
 
 function loadImage() {
-  photoWall.getOlderPhoto()
+  loading.value = true
+  photoWall.getOlderPhoto(() => {
+    loading.value = false
+  })
 }
 
 onMounted(() => {
@@ -42,7 +56,12 @@ function imageSrc(filename) {
 </script>
 
 <template>
-  <div class="photo-wall" v-infinite-scroll="loadImage" :infinite-scroll-distance="100">
+  <div
+    class="photo-wall"
+    v-infinite-scroll="loadImage"
+    :infinite-scroll-distance="100"
+    :loading="loading"
+  >
     <div class="waterfall-half">
       <ZoomInOutImage
         v-for="(photo, index) in odd(photoWall.photoList)"
@@ -67,6 +86,14 @@ function imageSrc(filename) {
   <RouterLink to="/photo/add">
     <i id="add-btn">
       <AddIcon />
+    </i>
+  </RouterLink>
+  <i id="fresh-btn" @click="photoWall.freshPhotoList()">
+    <RefreshIcon />
+  </i>
+  <RouterLink v-if="isAdmin" to="/review-photo">
+    <i id="review-btn">
+      <CheckbookIcon />
     </i>
   </RouterLink>
 </template>
@@ -110,6 +137,21 @@ function imageSrc(filename) {
   place-content: center;
 }
 
+#review-btn {
+  position: fixed;
+  bottom: 300px;
+  right: 10px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: white;
+  color: red;
+  font-size: 30px;
+  display: flex;
+  place-items: center;
+  place-content: center;
+}
+
 #fresh-btn {
   position: fixed;
   bottom: 220px;
@@ -124,6 +166,7 @@ function imageSrc(filename) {
   place-items: center;
   place-content: center;
 }
+
 .waterfall-half {
   width: 50%;
   -webkit-box-flex: 1;

@@ -21,6 +21,13 @@ export const useGuestInfoStore = defineStore('guestInfo', () => {
       userInfo.name !== ''
     )
   }
+
+  function adminCheck() {
+    return api.get(
+      `https://query-user-wedding-service-ffgpllgiuy.cn-beijing.fcapp.run/admin_check?guest_id=${userInfo.value.id}`
+    )
+  }
+
   function init() {
     const guestInfoFromLocalStorage = localStorage.getItem('guestInfo')
     try {
@@ -88,6 +95,7 @@ export const useGuestInfoStore = defineStore('guestInfo', () => {
     logout,
     verify,
     checkin,
+    adminCheck,
     getSeatImage
   }
 })

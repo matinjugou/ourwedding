@@ -67,10 +67,33 @@ export const usePhotoStore = defineStore('photo', () => {
   function uploadPhoto(photo) {
     const formData = new FormData()
     formData.append('photo', photo)
+    formData.append('prefix', '/unreviewed_guest_images')
     return api.post(
       'https://upload-image-wedding-service-adrpqvhysj.cn-beijing.fcapp.run/upload',
       formData
     )
   }
-  return { photoList, freshPhotoList, uploadPhoto, getNewestPhoto, getOlderPhoto }
+  function getUnreviewedPhotoList() {
+    return api.get(
+      'https://fetch-image-wedding-service-lbsvieakmw.cn-beijing.fcapp.run/list_unreviewed_guest_images'
+    )
+  }
+  function reviewPhoto(filename, legal) {
+    const formData = new FormData()
+    formData.append('filename', filename)
+    formData.append('legal', legal)
+    return api.post(
+      'https://fetch-image-wedding-service-lbsvieakmw.cn-beijing.fcapp.run/review_guest_image',
+      formData
+    )
+  }
+  return {
+    photoList,
+    freshPhotoList,
+    uploadPhoto,
+    getNewestPhoto,
+    getOlderPhoto,
+    getUnreviewedPhotoList,
+    reviewPhoto
+  }
 })

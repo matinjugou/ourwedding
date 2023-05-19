@@ -1,14 +1,21 @@
 <script setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
 import { useDanmakuStore } from '@/stores/danmaku.js'
 import { useGuestInfoStore } from '@/stores/guest.js'
 import { ElMessage } from 'element-plus'
+import CheckbookIcon from '@/components/icons/IconCheckbook.vue'
 
 const loading = ref(false)
 const msgInput = ref('')
 const danmakuList = reactive([])
 const danmakuStore = useDanmakuStore()
 const guestInfo = useGuestInfoStore()
+const isAdmin = ref(false)
+
+guestInfo.adminCheck().then((res) => {
+  isAdmin.value = res.data.data.admin === 1
+})
+
 const lastDanmakuId = computed(() => {
   if (danmakuList.length > 0) {
     return danmakuList[danmakuList.length - 1].id
@@ -30,8 +37,6 @@ const freshDanmakuList = (
   })
 }
 
-freshDanmakuList()
-
 const sendDanmaku = () => {
   if (msgInput.value.trim()) {
     danmakuStore.createDanmaku(msgInput.value.trim(), guestInfo.userInfo.id).then(() => {
@@ -41,6 +46,10 @@ const sendDanmaku = () => {
     })
   }
 }
+
+onMounted(() => {
+  freshDanmakuList()
+})
 </script>
 
 <template>
@@ -64,6 +73,11 @@ const sendDanmaku = () => {
       <button class="send-button" @click="sendDanmaku">发送</button>
     </div>
   </div>
+  <RouterLink v-if="isAdmin" to="/review-danmaku">
+    <i id="review-btn">
+      <CheckbookIcon />
+    </i>
+  </RouterLink>
 </template>
 
 <style scoped>
@@ -143,5 +157,20 @@ const sendDanmaku = () => {
 
 .send-button:hover {
   background-color: #249b49;
+}
+
+#review-btn {
+  position: fixed;
+  bottom: 140px;
+  right: 10px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: white;
+  color: red;
+  font-size: 30px;
+  display: flex;
+  place-items: center;
+  place-content: center;
 }
 </style>

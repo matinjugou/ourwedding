@@ -61,6 +61,16 @@ const router = createRouter({
       path: '/bulletin',
       name: 'bulletin',
       component: () => import('../views/client/BulletInBoardView.vue')
+    },
+    {
+      path: '/review-danmaku',
+      name: 'review-danmaku',
+      component: () => import('../views/admin/ReviewDanmakuView.vue')
+    },
+    {
+      path: '/review-photo',
+      name: 'review-photo',
+      component: () => import('../views/admin/ReviewPhotoView.vue')
     }
   ]
 })
