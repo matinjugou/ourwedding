@@ -35,6 +35,7 @@ const onDecode = (result) => {
     .checkin(result)
     .then(() => {
       ElMessage.success('签到成功')
+      window.location.reload()
     })
     .catch((err) => {
       errorMessage.value = err.response.data.message
@@ -74,11 +75,7 @@ const scanQRCode = () => {
   </div>
   <div class="scan-box-fullscreen" v-if="qrCodeScanner">
     <qrcode-drop-zone>
-      <qrcode-stream
-        @decode="onDecode"
-        @init="onInit"
-        :camera="process.env.NODE_ENV === 'development' ? 'front' : 'back'"
-      />
+      <qrcode-stream @decode="onDecode" @init="onInit" />
     </qrcode-drop-zone>
   </div>
 </template>
