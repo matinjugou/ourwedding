@@ -61,6 +61,11 @@ const uploadPhoto = () => {
       <div v-if="!imageSrc" class="upload-placeholder">点击上传照片</div>
       <img v-else :src="imageSrc" alt="预览" />
     </div>
+    <el-row>
+      <span style="color: #ccc; font-size: 16px; text-align: center"
+        >审核通过后，照片会显示在照片流中</span
+      >
+    </el-row>
     <div v-if="imageSrc" class="upload-button-container">
       <el-button @click="uploadPhoto" type="success" round :loading="uploading">上传</el-button>
     </div>
