@@ -96,6 +96,7 @@ onBeforeUnmount(() => {
   transform: translateY(-50%);
 }
 
+/* Modify ::after pseudo-element to create a triangle shape for trail with color gradient */
 .danmaku::after {
   content: '';
   position: absolute;
@@ -103,7 +104,7 @@ onBeforeUnmount(() => {
   left: 100%;
   bottom: 0;
   /* Set the background-color with gradient to create the trail */
-  background: linear-gradient(to left, #e6e9ef 0%, #e6e9ef 100%, rgba(230, 233, 239, 0) 100%);
+  background: linear-gradient(to right, #e6e9ef 0%, rgba(230, 233, 239, 0) 100%);
   width: 100%;
   height: 100%;
   clip-path: polygon(
