@@ -85,7 +85,12 @@ export const useGuestInfoStore = defineStore('guestInfo', () => {
     )
   }
   function getSeatImage() {
-    return 'https://avatars.githubusercontent.com/u/20502762?v=4'
+    const imageName = `/seat_images/${userInfo.value.seat_type}.png`
+    if (process.env.NODE_ENV === 'development') {
+      return `https://fetch-image-wedding-service-lbsvieakmw.cn-beijing.fcapp.run/image?filename=${imageName}`
+    } else {
+      return imageName
+    }
   }
   return {
     userInfo,
