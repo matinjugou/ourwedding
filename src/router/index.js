@@ -71,6 +71,11 @@ const router = createRouter({
       path: '/review-photo',
       name: 'review-photo',
       component: () => import('../views/admin/ReviewPhotoView.vue')
+    },
+    {
+      path: '/danmaku-wall',
+      name: 'danmaku-wall',
+      component: () => import('../views/display/DanmakuWallView.vue')
     }
   ]
 })
