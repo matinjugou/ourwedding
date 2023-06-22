@@ -14,25 +14,27 @@ export const useDanmakuStore = defineStore('danmaku', () => {
   }
 
   const getNewestDanmakuList = () => {
-    const res = new Promise((resolve, reject) => {
-      resolve([
-        {
-          id: 1,
-          content: '这是一条弹幕',
-          author_id: 1,
-          author_name: '张三',
-          legal: '1',
-          create_time: '2021-01-01 00:00:00'
-        },
-        {
-          id: 2,
-          content: '这是一条弹幕',
-          author_id: 1,
-          author_name: '张三',
-          legal: '1',
-          create_time: '2021-01-01 00:00:00'
-        }
-      ])
+    const res = new Promise((resolve) => {
+      resolve({
+        data: [
+          {
+            id: 1,
+            content: '这是一条弹幕',
+            author_id: 1,
+            author_name: '张三',
+            legal: '1',
+            create_time: '2021-01-01 00:00:00'
+          },
+          {
+            id: 2,
+            content: '这是一条弹幕',
+            author_id: 1,
+            author_name: '张三',
+            legal: '1',
+            create_time: '2021-01-01 00:00:00'
+          }
+        ]
+      })
     })
     return res
   }

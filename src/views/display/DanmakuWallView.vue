@@ -1,130 +1,172 @@
 <script setup>
-import { onMounted, onBeforeUnmount, ref } from 'vue'
+import { ref } from 'vue'
 import { useDanmakuStore } from '@/stores/danmaku.js'
 
+const maxDisplayLength = 10
+const cardCount = 6
+
 const danmakuStore = useDanmakuStore()
-const sortedDanmakuList = ref([])
+const danmakuList = ref([])
+const visibleDanmakuList = ref([])
 
-const timer = setInterval(() => {
-  danmakuStore.getNewestDanmakuList().then((res) => {
-    sortedDanmakuList.value = res.sort((a, b) => a.id - b.id)
+const displayIndex = ref(0)
+const nextVisibleDanmakuIndex = ref(0)
+const nextInsertDanmakuIndex = ref(0)
+
+const itemShow = (index) => {
+  let distance = (index - displayIndex.value + cardCount) % cardCount
+  if (distance === cardCount - 2) {
+    return false
+  }
+  return true
+}
+
+const itemStyle = (index) => {
+  let distance = (index - displayIndex.value + cardCount) % cardCount
+  if (distance === cardCount - 1) {
+    distance = -1
+  }
+  return {
+    top: `${(100 / (cardCount - 3)) * distance}%`,
+    height: `calc(100% / ${cardCount - 3})`
+  }
+}
+
+// const apiRes = await danmakuStore.fetchDanmakuList()
+for (let i = 0; i < cardCount; i++) {
+  visibleDanmakuList.value.push({
+    content: `init item`
   })
-}, 60000)
+}
+nextVisibleDanmakuIndex.value = 3
 
-onMounted(() => {
-  danmakuStore.getNewestDanmakuList().then((res) => {
-    sortedDanmakuList.value = res.sort((a, b) => a.id - b.id)
-  })
-})
+const insertNewDanmakuItem = (item) => {
+  danmakuList.value.push(item)
+  if (danmakuList.value.length > maxDisplayLength) {
+    danmakuList.value = danmakuList.value.slice(
+      danmakuList.value.length - maxDisplayLength,
+      danmakuList.value.length
+    )
+  }
+  nextInsertDanmakuIndex.value = danmakuList.value.length - 1
+}
 
-onBeforeUnmount(() => {
-  clearInterval(timer)
-})
+let danmakuId = 0
+
+const generateNewDanmaku = (timeout) => {
+  setTimeout(() => {
+    insertNewDanmakuItem({
+      author: {
+        id: 10001,
+        name: '黄超'
+      },
+      content: `danmakuText${danmakuId}`,
+      create_time: '2023-05-16T00:10:49',
+      id: danmakuId,
+      legal: 1
+    })
+    danmakuId += 1
+    generateNewDanmaku(Math.floor(Math.random() * 10) + 1)
+  }, timeout * 1000)
+}
+generateNewDanmaku(0)
+
+setInterval(() => {
+  // update visibleDanmakuList
+  if (danmakuList.value.length > 0) {
+    visibleDanmakuList.value[nextVisibleDanmakuIndex.value] =
+      danmakuList.value[nextInsertDanmakuIndex.value]
+    nextInsertDanmakuIndex.value = (nextInsertDanmakuIndex.value + 1) % danmakuList.value.length
+  }
+
+  displayIndex.value = (displayIndex.value + 1) % cardCount
+  nextVisibleDanmakuIndex.value = (nextVisibleDanmakuIndex.value + 1) % cardCount
+}, 1000)
 </script>
 
 <template>
-  <div class="danmaku-container">
-    <div class="stars-container">
+  <div class="danmaku-wall">
+    <div class="danmaku-container">
       <div
-        v-for="(danmaku, index) in sortedDanmakuList"
+        v-for="(item, index) in visibleDanmakuList"
         :key="index"
-        :style="{
-          '--duration': 5 + danmaku.content.length * 0.4 + 's',
-          '--interval': 2 * index + 's',
-          '--top': Math.random() * 100 + 'vh'
-        }"
-        class="danmaku"
+        class="danmaku-item"
+        :style="itemStyle(index)"
+        v-show="itemShow(index)"
       >
-        <span class="danmaku-content">{{ danmaku.content }}</span>
+        <div class="danmaku-content">
+          <div class="text-container">
+            <div class="text" :class="{ 'scrolling-text': item.content.length > 20 }">
+              {{ item.content }}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.danmaku-container {
+.danmaku-wall {
   position: relative;
   width: 100vw;
   height: 100vh;
   background-image: url('@/assets/nightsky.jpeg');
+  padding: 15px 0;
   background-size: 100% 100%;
   overflow: hidden;
 }
 
-.stars-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.danmaku {
-  position: absolute;
-  top: var(--top);
-  left: 100%;
-  font-weight: bold;
-  animation: danmaku-animation linear infinite;
-  animation-delay: var(--interval);
-  animation-duration: var(--duration);
-  display: flex;
-  white-space: nowrap;
-  font-size: 1rem;
-  line-height: 1.5; /* Add line height to make the padding-left equal to the container height */
-  height: 1.5em; /* Set the container height */
-
-  /* Clip the background to text, setting text color to transparent */
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: black;
-
-  /* Add padding-left to ensure no text is displayed within the semicircle */
-  padding-left: 1.5em; /* Set padding-left equal to container height */
-  padding-right: 1.5em; /* Set padding-left equal to container height */
-}
-
-/* Use before to create the desired semicircle shape */
-.danmaku::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
+.danmaku-container {
+  position: relative;
   height: 100%;
   width: 100%;
-  background-color: #e6e9ef;
-  border-radius: 100px 0 0 100px;
-  transform: translateY(-50%);
 }
 
-/* Modify ::after pseudo-element to create a triangle shape for trail with color gradient */
-.danmaku::after {
-  content: '';
+.danmaku-item {
   position: absolute;
-  top: 0;
-  left: 100%;
-  bottom: 0;
-  /* Set the background-color with gradient to create the trail */
-  background: linear-gradient(to right, #e6e9ef 0%, rgba(230, 233, 239, 0) 100%);
   width: 100%;
-  height: 100%;
-  clip-path: polygon(
-    0% 0%,
-    0% 100%,
-    100% 50%
-  ); /* To create the triangle with the correct direction */
+  box-sizing: border-box;
+  padding: 15px;
+  transition: top 0.3s ease-out;
 }
 
 .danmaku-content {
-  position: relative;
-  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  display: flex;
+  height: 100%;
+  padding: 32px;
+  align-items: center;
 }
 
-@keyframes danmaku-animation {
-  0% {
+.text-container {
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.999);
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  overflow: hidden;
+}
+
+.text {
+  padding-left: 10px;
+  font-size: 50px;
+  color: black;
+}
+
+.scrolling-text {
+  animation: scrollingText 5s linear infinite;
+}
+
+@keyframes scrollingText {
+  from {
     transform: translateX(0);
   }
-  100% {
-    transform: translateX(calc(-100% - 100vw));
+  to {
+    transform: translateX(-100%);
   }
 }
 </style>
