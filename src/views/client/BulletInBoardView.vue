@@ -55,10 +55,14 @@ onMounted(() => {
 <template>
   <div class="danmaku-page">
     <div class="border-bg"></div>
+    <h1 class="danmaku-title">历史弹幕</h1>
     <div class="danmaku-history-container" v-loading="loading">
-      <h1 class="danmaku-title">历史弹幕</h1>
-      <div v-for="danmaku in danmakuList" :key="danmaku.id" class="danmaku-item">
-        {{ danmaku.content }}
+      <div class="danmaku-history-container-blur danmaku-history-container-blur-top"></div>
+      <div class="danmaku-history-container-blur danmaku-history-container-blur-bottom"></div>
+      <div class="danmaku-history-items">
+        <div v-for="danmaku in danmakuList" :key="danmaku.id" class="danmaku-item">
+          {{ danmaku.content }}
+        </div>
       </div>
     </div>
     <div class="send-box">
@@ -96,17 +100,38 @@ onMounted(() => {
 }
 
 .danmaku-history-container {
-  padding: 15px;
-  padding-bottom: 60px; /* 新增 */
-  /* background: #f0f3f4; */
-  overflow-y: auto;
-  height: calc(100vh - 50px); /* 新增 */
   flex: 1;
-  overflow-y: auto;
+  margin-bottom: 80px;
   padding: 15px 10%;
+  position: relative;
+  overflow: hidden;
+}
+
+.danmaku-history-items{
+  overflow-y: auto;
+  box-sizing: border-box;
+  height: calc(100% - 21px);
+  width: 100%;
+  margin-top: 1px;
+}
+
+.danmaku-history-container-blur {
+  height: 20px;
+  width: 81%;
+  position: absolute;
+  z-index: 1;
+}
+
+.danmaku-history-container-blur-bottom{
+  bottom: 34px;
+  background:linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(23,60,91,1) 100%);
+}
+.danmaku-history-container-blur-top{
+  background:linear-gradient(to top, rgba(255,255,255,0) 0%,rgba(23,60,91,1) 100%);
 }
 
 .danmaku-title {
+  margin-top: 15px;
   text-align: center;
   line-height: 5rem;
   color: #dea610;

@@ -54,6 +54,7 @@ header .wrapper {
   display: flex;
   place-items: center;
   place-content: center;
+  z-index: 999;
 }
 .home-btn-top {
   top: 20px;
