@@ -1,6 +1,13 @@
 @import './base.css';
 
 @font-face {
+  font-family: "阿里妈妈刀隶体 Regular";
+  font-weight: 200;
+  src: url("./AlimamaDaoLiTi.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
   font-family: '阿里妈妈东方大楷 Regular';
   font-weight: 400;
   src: url('./Alimama_DongFangDaKai_Regular.woff2') format('woff2'),

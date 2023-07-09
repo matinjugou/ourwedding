@@ -1,6 +1,33 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useDanmakuStore } from '@/stores/danmaku.js'
+import lottie from 'lottie-web'
+
+let meteorAnimation
+let glitterAnimation
+onMounted(() => {
+  meteorAnimation = lottie.loadAnimation({
+    container: document.getElementById('meteor-container'), // 包含动画的dom元素
+    renderer: 'svg', // 渲染出来的是什么格式
+    loop: true, // 循环播放
+    autoplay: true, // 自动播放
+    path: 'src/assets/xialiuxing/xialiuxing.json'
+  })
+  meteorAnimation.setSpeed(0.7)
+  // 渲染主图按钮动画
+  glitterAnimation = lottie.loadAnimation({
+    container: document.getElementById('glitter-container'), // 包含动画的dom元素
+    renderer: 'svg', // 渲染出来的是什么格式
+    loop: true, // 循环播放
+    autoplay: true, // 自动播放
+    path: 'src/assets/xingguangshanshuo/xingguangshanshuo.json'
+  })
+  document.getElementsByClassName('home-btn')[0].style.display = "none";
+})
+onUnmounted(() => {
+  meteorAnimation.destroy()
+  glitterAnimation.destroy()
+})
 
 const maxDisplayLength = 10
 const cardCount = 6
@@ -60,7 +87,7 @@ const generateNewDanmaku = (timeout) => {
         id: 10001,
         name: '黄超'
       },
-      content: `danmakuText${danmakuId}`,
+      content: `弹幕文字弹幕文字弹幕文字弹幕文字弹幕文字${danmakuId}`,
       create_time: '2023-05-16T00:10:49',
       id: danmakuId,
       legal: 1
@@ -81,12 +108,14 @@ setInterval(() => {
 
   displayIndex.value = (displayIndex.value + 1) % cardCount
   nextVisibleDanmakuIndex.value = (nextVisibleDanmakuIndex.value + 1) % cardCount
-}, 1000)
+}, 3000)
 </script>
 
 <template>
   <div class="danmaku-wall">
     <div class="danmaku-container">
+      <div id="meteor-container"></div>
+      <div id="glitter-container"></div>
       <div
         v-for="(item, index) in visibleDanmakuList"
         :key="index"
@@ -107,6 +136,16 @@ setInterval(() => {
 </template>
 
 <style scoped>
+#meteor-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+#glitter-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
 .danmaku-wall {
   position: relative;
   width: 100vw;
@@ -127,7 +166,7 @@ setInterval(() => {
   position: absolute;
   width: 100%;
   box-sizing: border-box;
-  padding: 15px;
+  padding: 30px 15px;
   transition: top 0.3s ease-out;
 }
 
@@ -144,21 +183,23 @@ setInterval(() => {
   display: flex;
   align-items: center;
   border-radius: 15px;
-  background-color: rgba(255, 255, 255, 0.999);
+  /* background-color: rgba(255, 255, 255, 0.999); */
   width: 100%;
   height: 100%;
-  padding: 5px;
+  /* padding: 5px; */
   overflow: hidden;
 }
 
 .text {
+  font-family: '阿里妈妈刀隶体 Regular';
   padding-left: 10px;
-  font-size: 50px;
-  color: black;
+  font-size: 84px;
+  color: #ecec98f0;
+  white-space: nowrap;
 }
 
 .scrolling-text {
-  animation: scrollingText 5s linear infinite;
+  animation: scrollingText 10s linear infinite;
 }
 
 @keyframes scrollingText {
