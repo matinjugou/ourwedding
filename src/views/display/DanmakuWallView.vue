@@ -138,13 +138,15 @@ setInterval(() => {
 <style scoped>
 #meteor-container {
   width: 100%;
-  height: 100%;
   position: absolute;
+  right: 0;
 }
+
 #glitter-container {
   width: 100%;
   height: 100%;
   position: absolute;
+  display:inline-block;
 }
 .danmaku-wall {
   position: relative;
