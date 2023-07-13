@@ -2,17 +2,25 @@ import { defineStore } from 'pinia'
 import api from '@/services/api'
 
 export const useDanmakuStore = defineStore('danmaku', () => {
-  const fetchDanmakuList = (startId = 0, count = 20, legal = 'all', authorId = null) => {
+  const fetchDanmakuList = (
+    startId = 0,
+    count = 20,
+    legal = 'all',
+    authorId = null,
+    updateTime = 0
+  ) => {
     return api.get('https://bulletin-board-wedding-service-pbffkjgajx.cn-beijing.fcapp.run/list', {
       params: {
         start_id: startId,
         count,
         legal,
-        author_id: authorId
+        author_id: authorId,
+        update_time: updateTime
       }
     })
   }
 
+  /*
   const getNewestDanmakuList = () => {
     const res = new Promise((resolve) => {
       resolve({
@@ -38,6 +46,7 @@ export const useDanmakuStore = defineStore('danmaku', () => {
     })
     return res
   }
+  */
 
   const createDanmaku = (content, authorId) => {
     const formData = new FormData()
@@ -62,7 +71,6 @@ export const useDanmakuStore = defineStore('danmaku', () => {
   return {
     fetchDanmakuList,
     createDanmaku,
-    reviewDanmaku,
-    getNewestDanmakuList
+    reviewDanmaku
   }
 })

@@ -22,7 +22,7 @@ onMounted(() => {
     autoplay: true, // 自动播放
     path: 'src/assets/xingguangshanshuo/xingguangshanshuo.json'
   })
-  document.getElementsByClassName('home-btn')[0].style.display = "none";
+  document.getElementsByClassName('home-btn')[0].style.display = 'none'
 })
 onUnmounted(() => {
   meteorAnimation.destroy()
@@ -30,7 +30,8 @@ onUnmounted(() => {
 })
 
 const maxDisplayLength = 10
-const cardCount = 6
+const cardCount = 3
+const totalCardCount = cardCount + 3
 
 const danmakuStore = useDanmakuStore()
 const danmakuList = ref([])
@@ -41,64 +42,79 @@ const nextVisibleDanmakuIndex = ref(0)
 const nextInsertDanmakuIndex = ref(0)
 
 const itemShow = (index) => {
-  let distance = (index - displayIndex.value + cardCount) % cardCount
-  if (distance === cardCount - 2) {
+  let distance = (index - displayIndex.value + totalCardCount) % totalCardCount
+  if (distance === totalCardCount - 2) {
     return false
   }
   return true
 }
 
 const itemStyle = (index) => {
-  let distance = (index - displayIndex.value + cardCount) % cardCount
-  if (distance === cardCount - 1) {
+  let distance = (index - displayIndex.value + totalCardCount) % totalCardCount
+  if (distance === totalCardCount - 1) {
     distance = -1
   }
   return {
-    top: `${(100 / (cardCount - 3)) * distance}%`,
-    height: `calc(100% / ${cardCount - 3})`
+    top: `${(100 / (totalCardCount - 3)) * distance}%`,
+    height: `calc(100% / ${totalCardCount - 3})`
   }
 }
 
 // const apiRes = await danmakuStore.fetchDanmakuList()
-for (let i = 0; i < cardCount; i++) {
+for (let i = 0; i < totalCardCount; i++) {
   visibleDanmakuList.value.push({
     content: `init item`
   })
 }
-nextVisibleDanmakuIndex.value = 3
+nextVisibleDanmakuIndex.value = totalCardCount - 3
+
+const newDanmakuList = []
+let lastUpdateTime = 0
+let lastIdSet = new Set()
+setInterval(() => {
+  danmakuStore.fetchDanmakuList(0, 10, 'true', null, lastUpdateTime).then((res) => {
+    if (res.data.length > 0) {
+      const checkItem = (index) => {
+        if (index >= res.data.length) {
+          return
+        }
+        const item = res.data[index]
+        if (item.update_time > lastUpdateTime) {
+          insertNewDanmakuItem(item)
+          lastUpdateTime = item.update_time
+          lastIdSet.add(item.id)
+        } else {
+          if (!lastIdSet.has(item.id)) {
+            insertNewDanmakuItem(item)
+            lastIdSet.add(item.id)
+          }
+        }
+        setTimeout(checkItem, 100, index + 1)
+      }
+      checkItem(0)
+    }
+  })
+}, 1000)
 
 const insertNewDanmakuItem = (item) => {
-  danmakuList.value.push(item)
-  if (danmakuList.value.length > maxDisplayLength) {
-    danmakuList.value = danmakuList.value.slice(
-      danmakuList.value.length - maxDisplayLength,
-      danmakuList.value.length
-    )
+  newDanmakuList.push(item)
+  step()
+}
+
+const step = () => {
+  // update danmakuList
+  if (newDanmakuList.length > 0) {
+    const item = newDanmakuList.shift()
+    danmakuList.value.push(item)
+    if (danmakuList.value.length > maxDisplayLength) {
+      danmakuList.value = danmakuList.value.slice(
+        danmakuList.value.length - maxDisplayLength,
+        danmakuList.value.length
+      )
+    }
+    nextInsertDanmakuIndex.value = danmakuList.value.length - 1
   }
-  nextInsertDanmakuIndex.value = danmakuList.value.length - 1
-}
 
-let danmakuId = 0
-
-const generateNewDanmaku = (timeout) => {
-  setTimeout(() => {
-    insertNewDanmakuItem({
-      author: {
-        id: 10001,
-        name: '黄超'
-      },
-      content: `弹幕文字弹幕文字弹幕文字弹幕文字弹幕文字${danmakuId}`,
-      create_time: '2023-05-16T00:10:49',
-      id: danmakuId,
-      legal: 1
-    })
-    danmakuId += 1
-    generateNewDanmaku(Math.floor(Math.random() * 10) + 1)
-  }, timeout * 1000)
-}
-generateNewDanmaku(0)
-
-setInterval(() => {
   // update visibleDanmakuList
   if (danmakuList.value.length > 0) {
     visibleDanmakuList.value[nextVisibleDanmakuIndex.value] =
@@ -106,9 +122,11 @@ setInterval(() => {
     nextInsertDanmakuIndex.value = (nextInsertDanmakuIndex.value + 1) % danmakuList.value.length
   }
 
-  displayIndex.value = (displayIndex.value + 1) % cardCount
-  nextVisibleDanmakuIndex.value = (nextVisibleDanmakuIndex.value + 1) % cardCount
-}, 3000)
+  displayIndex.value = (displayIndex.value + 1) % totalCardCount
+  nextVisibleDanmakuIndex.value = (nextVisibleDanmakuIndex.value + 1) % totalCardCount
+}
+
+setInterval(step, 3000)
 </script>
 
 <template>
@@ -146,7 +164,7 @@ setInterval(() => {
   width: 100%;
   height: 100%;
   position: absolute;
-  display:inline-block;
+  display: inline-block;
 }
 .danmaku-wall {
   position: relative;
