@@ -35,11 +35,11 @@ const uploadPhoto = () => {
 
   photoStore
     .uploadPhoto(imageSrc.value)
-    .then((res) => {
+    .then(() => {
       ElMessage.success('上传成功')
       router.push('/photo/wall')
     })
-    .catch((err) => {
+    .catch(() => {
       ElMessage.error('上传失败')
     })
     .finally(() => {

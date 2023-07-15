@@ -88,9 +88,9 @@ function imageSrc(filename) {
       <AddIcon />
     </i>
   </RouterLink>
-  <!--i id="fresh-btn" @click="photoWall.freshPhotoList()">
+  <i id="fresh-btn" @click="photoWall.freshPhotoList()">
     <RefreshIcon />
-  </i-->
+  </i>
   <RouterLink v-if="isAdmin" to="/review-photo">
     <i id="review-btn">
       <CheckbookIcon />
@@ -139,7 +139,7 @@ function imageSrc(filename) {
 
 #review-btn {
   position: fixed;
-  bottom: 220px;
+  bottom: 300px;
   right: 10px;
   width: 60px;
   height: 60px;
