@@ -70,7 +70,11 @@ onUnmounted(() => {
         :loading="loading"
         :class="{ 'non-content': unreviewedDanmakuList.length === 0 }"
       >
-        <p v-if="unreviewedDanmakuList.length > 0">{{ unreviewedDanmakuList[index].content }}</p>
+        <p v-if="unreviewedDanmakuList.length > 0">
+          {{ unreviewedDanmakuList[index].content }}<br />@{{
+            unreviewedDanmakuList[index].author.name
+          }}
+        </p>
         <span v-else>暂无未审核的弹幕</span>
       </div>
       <el-row
