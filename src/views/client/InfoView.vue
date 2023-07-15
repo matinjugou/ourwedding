@@ -20,6 +20,10 @@ const guestInfo = useGuestInfoStore()
         <span>2023年8月5日上午</span>
       </div>
       <div>
+        <span>开始签到时间：</span>
+        <span>10:18</span>
+      </div>
+      <div>
         <span>婚礼地点：</span>
         <span>金茂北京王府井万丽酒店</span>
       </div>
@@ -37,9 +41,15 @@ const guestInfo = useGuestInfoStore()
     </el-card>
     <el-card class="info-block">
       <template #header>
-        <h3>日程安排</h3>
+        <h3>注意事项</h3>
       </template>
-      <span>尚无当日日程安排，敬请期待</span>
+      <p>1. 到场后扫描现场二维码签到并领取伴手礼</p>
+      <p>2. 着装配色若有条件请尽量参考下面的色卡</p>
+      <div>
+        <img src="@/assets/images/dress_code.jpeg" style="width: 70%" />
+      </div>
+      <p>3. 如有停车需要请提前联系新郎或者新娘</p>
+      <p>4. 谢绝礼金，感谢理解</p>
     </el-card>
   </div>
 </template>
