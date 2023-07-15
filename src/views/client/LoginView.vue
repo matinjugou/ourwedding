@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import { useGuestInfoStore } from '@/stores/guest.js'
 import { ElMessage } from 'element-plus'
 
@@ -9,6 +9,7 @@ const router = useRouter()
 const guestInfo = useGuestInfoStore()
 const username = ref('')
 const inviteCode = route.query.invite_code
+const guestName = route.query.guest_name
 
 function verify() {
   guestInfo
@@ -25,6 +26,11 @@ function verify() {
 
 function checkInviteCode() {
   return inviteCode
+}
+
+if (guestName && inviteCode) {
+  username.value = guestName
+  verify()
 }
 </script>
 

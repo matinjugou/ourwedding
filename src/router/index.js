@@ -3,13 +3,19 @@ import api from '@/services/api'
 
 function checkModuleState() {
   return (to, from, next) => {
-    api.get('/module/state?moduleName=' + to.name).then((res) => {
-      if (!res.data.data.enable) {
-        next({ name: 'module-disable' })
-      } else {
-        next()
-      }
-    })
+    api
+      .get(
+        'https://global-settings-wedding-service-srkycydkes.cn-beijing.fcapp.run/module-enable?name=' +
+          to.name
+      )
+      .then((res) => {
+        console.log(res)
+        if (!res.data.enabled) {
+          next({ name: 'module-disable' })
+        } else {
+          next()
+        }
+      })
   }
 }
 
@@ -24,7 +30,8 @@ const router = createRouter({
     {
       path: '/checkin',
       name: 'checkin',
-      component: () => import('../views/client/CheckinView.vue')
+      component: () => import('../views/client/CheckinView.vue'),
+      beforeEnter: checkModuleState()
     },
     {
       path: '/chatroom',
@@ -35,7 +42,8 @@ const router = createRouter({
     {
       path: '/info',
       name: 'info',
-      component: () => import('../views/client/InfoView.vue')
+      component: () => import('../views/client/InfoView.vue'),
+      beforeEnter: checkModuleState()
     },
     {
       path: '/module-disable',
@@ -50,7 +58,8 @@ const router = createRouter({
     {
       path: '/photo/wall',
       name: 'photoWall',
-      component: () => import('../views/client/PhotoWallView.vue')
+      component: () => import('../views/client/PhotoWallView.vue'),
+      beforeEnter: checkModuleState()
     },
     {
       path: '/photo/add',
@@ -60,7 +69,8 @@ const router = createRouter({
     {
       path: '/bulletin',
       name: 'bulletin',
-      component: () => import('../views/client/BulletInBoardView.vue')
+      component: () => import('../views/client/BulletInBoardView.vue'),
+      beforeEnter: checkModuleState()
     },
     {
       path: '/review-danmaku',
