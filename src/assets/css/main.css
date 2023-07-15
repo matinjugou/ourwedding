@@ -70,7 +70,7 @@ a,
   width: 130%;
   height: 25%;
   background-position: bottom;
-  background-image: url('@/assets/bg.png');
+  background-image: url('@/assets/images/bg.png');
   border-radius: 0 0 45% 45%;
   margin-bottom: -15%;
   background-size: cover;
@@ -118,7 +118,7 @@ img {
   display: block;
   content: '';
   width: 100%;
-  background-image: url('@/assets/border.png');
+  background-image: url('@/assets/images/border.png');
   height: 2rem;
   background-position: center;
   object-fit: cover;
