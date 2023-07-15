@@ -1,8 +1,7 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 import { useGuestInfoStore } from '@/stores/guest.js'
-import { Camera } from '@element-plus/icons-vue'
-import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue3-qrcode-reader'
+import { QrcodeStream, QrcodeDropZone } from 'vue3-qrcode-reader'
 import { ElMessage } from 'element-plus'
 
 const guestInfo = useGuestInfoStore()
@@ -13,6 +12,7 @@ const onInit = async function (promise) {
     await promise
   } catch (error) {
     if (error.name === 'StreamApiNotSupportedError') {
+      errorMessage.value.textContent = '您的浏览器不支持该功能'
     } else if (error.name === 'NotAllowedError') {
       errorMessage.value = '没有摄像头访问权限'
     } else if (error.name === 'NotFoundError') {

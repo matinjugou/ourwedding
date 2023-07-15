@@ -134,7 +134,7 @@ export default [
   {
     url: '/api/photo/list',
     type: 'get',
-    response: (req) => {
+    response: () => {
       return {
         data: ['202305111647374SLPF5_H.jpeg', '20230511164654LSAL7X_V.jpeg'],
         status: 'success'
@@ -144,7 +144,7 @@ export default [
   {
     url: '/api/photo/upload',
     type: 'post',
-    response: (req) => {
+    response: () => {
       return {
         code: 0,
         data: {
