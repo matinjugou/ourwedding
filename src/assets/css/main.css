@@ -1,17 +1,17 @@
-@import './base.css';
+@import '@/assets/css/base.css';
 
 @font-face {
-  font-family: "阿里妈妈刀隶体 Regular";
+  font-family: '阿里妈妈刀隶体 Regular';
   font-weight: 200;
-  src: url("./AlimamaDaoLiTi.woff2") format("woff2");
+  src: url('@/assets/fonts/AlimamaDaoLiTi.woff2') format('woff2');
   font-display: swap;
 }
 
 @font-face {
   font-family: '阿里妈妈东方大楷 Regular';
   font-weight: 400;
-  src: url('./Alimama_DongFangDaKai_Regular.woff2') format('woff2'),
-    url('./Alimama_DongFangDaKai_Regular.woff2') format('woff');
+  src: url('@/assets/fonts/Alimama_DongFangDaKai_Regular.woff2') format('woff2'),
+    url('@/assets/fonts/Alimama_DongFangDaKai_Regular.woff2') format('woff');
   font-display: swap;
 }
 
@@ -126,6 +126,6 @@ img {
   background-size: cover;
 }
 
-.el-loading-mask{
+.el-loading-mask {
   background-color: transparent;
 }

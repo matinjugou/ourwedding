@@ -41,7 +41,7 @@ defineProps({
   width: 100%;
   height: 100vh;
   box-sizing: border-box;
-  background-image: url('@/assets/bg.png');
+  background-image: url('@/assets/images/bg.png');
   background-size: cover;
   background-position: center;
   padding: 56.8vh 2rem 2rem;
@@ -49,7 +49,7 @@ defineProps({
 }
 
 .greetings h1 {
-  background-image: url('@/assets/gold_bg.jpeg');
+  background-image: url('@/assets/images/gold_bg.jpeg');
   background-size: contain;
   background-repeat: repeat;
   -webkit-background-clip: text;

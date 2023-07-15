@@ -96,7 +96,7 @@ onUnmounted(() => {
 
 <style scoped>
 .border-bg {
-  background-image: url('@/assets/border_bg.png');
+  background-image: url('@/assets/images/border_bg.png');
   width: 100%;
   height: calc(100% - 50px);
   background-size: 100% 100%;

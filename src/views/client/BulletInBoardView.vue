@@ -86,7 +86,7 @@ onMounted(() => {
 
 <style scoped>
 .border-bg {
-  background-image: url('@/assets/border_bg.png');
+  background-image: url('@/assets/images/border_bg.png');
   width: 100%;
   height: calc(100% - 50px);
   background-size: 100% 100%;
@@ -107,7 +107,7 @@ onMounted(() => {
   overflow: hidden;
 }
 
-.danmaku-history-items{
+.danmaku-history-items {
   overflow-y: auto;
   box-sizing: border-box;
   height: calc(100% - 21px);
@@ -122,12 +122,12 @@ onMounted(() => {
   z-index: 1;
 }
 
-.danmaku-history-container-blur-bottom{
+.danmaku-history-container-blur-bottom {
   bottom: 34px;
-  background:linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(23,60,91,1) 100%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(23, 60, 91, 1) 100%);
 }
-.danmaku-history-container-blur-top{
-  background:linear-gradient(to top, rgba(255,255,255,0) 0%,rgba(23,60,91,1) 100%);
+.danmaku-history-container-blur-top {
+  background: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, rgba(23, 60, 91, 1) 100%);
 }
 
 .danmaku-title {
