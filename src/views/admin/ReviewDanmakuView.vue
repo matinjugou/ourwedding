@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useDanmakuStore } from '@/stores/danmaku.js'
 import ReturnIcon from '@/components/icons/IconReturn.vue'
 import RefreshIcon from '@/components/icons/IconRefresh.vue'
@@ -49,8 +49,14 @@ const nextIndex = () => {
   }
 }
 
+let timer = null
+
 onMounted(() => {
-  getUnreviewedDanmakuList()
+  timer = setInterval(getUnreviewedDanmakuList, 1000)
+})
+
+onUnmounted(() => {
+  clearInterval(timer)
 })
 </script>
 

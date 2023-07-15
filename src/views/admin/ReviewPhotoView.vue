@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { usePhotoStore } from '@/stores/photo.js'
 import ReturnIcon from '@/components/icons/IconReturn.vue'
 import RefreshIcon from '@/components/icons/IconRefresh.vue'
@@ -58,8 +58,14 @@ function imageSrc(filename) {
   }
 }
 
+let timer = null
+
 onMounted(() => {
-  getUnreviewedPhotoList()
+  timer = setInterval(getUnreviewedPhotoList, 1000)
+})
+
+onUnmounted(() => {
+  clearInterval(timer)
 })
 </script>
 

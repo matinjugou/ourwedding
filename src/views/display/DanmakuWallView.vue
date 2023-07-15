@@ -5,13 +5,22 @@ import lottie from 'lottie-web'
 
 let meteorAnimation
 let glitterAnimation
+
+let animationPathRoot
+
+if (process.env.NODE_ENV === 'development') {
+  animationPathRoot = 'src'
+} else {
+  animationPathRoot = 'https://wedding.magichc7.com'
+}
+
 onMounted(() => {
   meteorAnimation = lottie.loadAnimation({
     container: document.getElementById('meteor-container'), // 包含动画的dom元素
     renderer: 'svg', // 渲染出来的是什么格式
     loop: true, // 循环播放
     autoplay: true, // 自动播放
-    path: 'src/assets/xialiuxing/xialiuxing.json'
+    path: `${animationPathRoot}/assets/xialiuxing/xialiuxing.json`
   })
   meteorAnimation.setSpeed(0.7)
   // 渲染主图按钮动画
@@ -20,7 +29,7 @@ onMounted(() => {
     renderer: 'svg', // 渲染出来的是什么格式
     loop: true, // 循环播放
     autoplay: true, // 自动播放
-    path: 'src/assets/xingguangshanshuo/xingguangshanshuo.json'
+    path: `${animationPathRoot}/assets/xingguangshanshuo/xingguangshanshuo.json`
   })
   document.getElementsByClassName('home-btn')[0].style.display = 'none'
 })
