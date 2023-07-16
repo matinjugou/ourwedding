@@ -25,15 +25,6 @@ const guestLogout = () => {
   <Transition name="fade" mode="out-in">
     <div v-if="guestInfo.logined" class="home-menu-container">
       <div class="home-menu-list">
-        <BlockButton index="/checkin">
-          <template #icon>
-            <CheckIcon />
-          </template>
-          <template #details> 通过扫描现场二维码签到 </template>
-
-          现场签到
-        </BlockButton>
-
         <BlockButton index="/info">
           <template #icon>
             <InfoIcon />
@@ -41,6 +32,15 @@ const guestLogout = () => {
           <template #details>查询坐席、日程安排</template>
 
           信息查询
+        </BlockButton>
+
+        <BlockButton index="/checkin">
+          <template #icon>
+            <CheckIcon />
+          </template>
+          <template #details> 通过扫描现场二维码签到 </template>
+
+          现场签到
         </BlockButton>
 
         <BlockButton index="/bulletin">

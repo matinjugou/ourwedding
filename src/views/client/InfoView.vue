@@ -17,15 +17,15 @@ const guestInfo = useGuestInfoStore()
       </div>
       <div>
         <span>婚礼日期：</span>
-        <span>2023年8月5日上午</span>
-      </div>
-      <div>
-        <span>开始签到时间：</span>
-        <span>10:18</span>
+        <span class="important">2023年8月5日上午</span>
       </div>
       <div>
         <span>婚礼地点：</span>
         <span>金茂北京王府井万丽酒店</span>
+      </div>
+      <div>
+        <span>开始签到时间：</span>
+        <span class="important">10:18</span>
       </div>
     </el-card>
     <el-card class="info-block">
@@ -43,19 +43,19 @@ const guestInfo = useGuestInfoStore()
       <template #header>
         <h3>注意事项</h3>
       </template>
-      <p>1. 到场后扫描现场二维码签到并领取伴手礼</p>
-      <p>2. 着装配色若有条件请尽量参考下面的色卡</p>
+      <p>1. <span class="important">谢绝礼金，感谢理解</span></p>
+      <p>2. 到场后扫描现场二维码签到并领取伴手礼</p>
+      <p>3. 若有条件，着装配色请尽量参考下面的色卡或简约为主</p>
       <div>
         <img src="@/assets/images/dress_code.jpeg" style="width: 70%" />
       </div>
-      <p>3. 如有停车需要请提前联系新郎或者新娘</p>
-      <p>4. 谢绝礼金，感谢理解</p>
+      <p>4. 如有停车需要请提前联系新郎或者新娘</p>
     </el-card>
   </div>
 </template>
 
 <style scoped>
-/* .info-block {
-  margin: 0 1rem 1rem;
-} */
+.important {
+  color: rgb(182, 129, 56);
+}
 </style>

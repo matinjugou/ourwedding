@@ -9,7 +9,6 @@ function checkModuleState() {
           to.name
       )
       .then((res) => {
-        console.log(res)
         if (!res.data.enabled) {
           next({ name: 'module-disable' })
         } else {

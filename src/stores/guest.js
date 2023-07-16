@@ -4,6 +4,7 @@ import api from '@/services/api'
 
 export const useGuestInfoStore = defineStore('guestInfo', () => {
   const logined = ref(false)
+  const verifying = ref(false)
   const userInfo = ref({
     id: 0,
     name: '',
@@ -33,15 +34,16 @@ export const useGuestInfoStore = defineStore('guestInfo', () => {
     try {
       const gInfo = JSON.parse(guestInfoFromLocalStorage)
       if (verifyUserInfo(gInfo)) {
-        userInfo.value = gInfo
+        return verify(gInfo.invite_code, gInfo.name)
+      } else {
+        return Promise.reject(new Error('invalid guest info'))
       }
-      fresh()
-      logined.value = true
     } catch (e) {
       localStorage.removeItem('guestInfo')
-      return
+      return Promise.reject(e)
     }
   }
+  /*
   function fresh() {
     api
       .get(
@@ -51,6 +53,7 @@ export const useGuestInfoStore = defineStore('guestInfo', () => {
         userInfo.value = res.data.data
       })
   }
+  */
   function login(gInfo) {
     userInfo.value = gInfo
     logined.value = true
@@ -70,15 +73,24 @@ export const useGuestInfoStore = defineStore('guestInfo', () => {
     localStorage.removeItem('guestInfo')
   }
   function verify(invite_code, guest_name) {
-    return api.get(
-      `https://query-user-wedding-service-ffgpllgiuy.cn-beijing.fcapp.run/verify?invite_code=${invite_code}&guest_name=${guest_name}`
-    )
+    verifying.value = true
+    return api
+      .get(
+        `https://query-user-wedding-service-ffgpllgiuy.cn-beijing.fcapp.run/verify?invite_code=${invite_code}&guest_name=${guest_name}`
+      )
+      .then((res) => {
+        verifying.value = false
+        return res
+      })
+      .catch((err) => {
+        verifying.value = false
+        return Promise.reject(err)
+      })
   }
   function checkin(scenarioId) {
     const formData = new FormData()
     formData.append('scenarioId', scenarioId)
     formData.append('guestId', userInfo.value.id)
-    console.log(formData)
     return api.post(
       'https://query-user-wedding-service-ffgpllgiuy.cn-beijing.fcapp.run/checkin',
       formData
@@ -95,6 +107,7 @@ export const useGuestInfoStore = defineStore('guestInfo', () => {
   return {
     userInfo,
     logined,
+    verifying,
     init,
     login,
     logout,

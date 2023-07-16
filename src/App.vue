@@ -1,12 +1,29 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
 import { useGuestInfoStore } from '@/stores/guest.js'
 import HomeIcon from '@/components/icons/IconHome.vue'
+import { ElMessage } from 'element-plus'
+
+const router = useRouter()
 const guestInfo = useGuestInfoStore()
-guestInfo.init()
+guestInfo
+  .init()
+  .then((res) => {
+    ElMessage.success('登录成功')
+    guestInfo.login(res.data.data)
+    router.push('/')
+  })
+  .catch((err) => {
+    try {
+      ElMessage.error(err.response.data.message)
+    } catch {
+      // ElMessage.error(err)
+    }
+  })
 </script>
 
 <template>
+  <div class="mask" v-if="guestInfo.verifying" v-loading="guestInfo.verifying"></div>
   <RouterView />
   <RouterLink to="/">
     <i class="home-btn">
@@ -16,6 +33,15 @@ guestInfo.init()
 </template>
 
 <style scoped>
+.mask {
+  position: absolute;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 999;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;
