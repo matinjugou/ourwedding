@@ -58,8 +58,10 @@ function imageSrc(filename) {
 <template>
   <div
     class="photo-wall"
+    :infinite-scroll-immediate="false"
     v-infinite-scroll="loadImage"
     :infinite-scroll-distance="100"
+    :infinite-scroll-delay="10000"
     :loading="loading"
   >
     <div class="waterfall-half">
