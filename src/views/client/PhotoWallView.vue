@@ -57,32 +57,32 @@ function imageSrc(filename) {
 
 <template>
   <div
-    class="photo-wall"
+    class="photo-wall-wrapper"
+    :infinite-scroll-distance="100"
     :infinite-scroll-immediate="false"
     v-infinite-scroll="loadImage"
-    :infinite-scroll-distance="100"
-    :infinite-scroll-delay="10000"
-    :loading="loading"
   >
-    <div class="waterfall-half">
-      <ZoomInOutImage
-        v-for="(photo, index) in odd(photoWall.photoList)"
-        :key="photo.filename"
-        :src="imageSrc(photo.filename)"
-        :alt="photo.filename"
-        class="photo-item"
-        :style="[fadeInDelay(index)]"
-      />
-    </div>
-    <div class="waterfall-half">
-      <ZoomInOutImage
-        v-for="(photo, index) in even(photoWall.photoList)"
-        :key="photo.filename"
-        :src="imageSrc(photo.filename)"
-        :alt="photo.filename"
-        class="photo-item"
-        :style="[fadeInDelay(index)]"
-      />
+    <div class="photo-wall" :loading="loading">
+      <div class="waterfall-half">
+        <ZoomInOutImage
+          v-for="(photo, index) in odd(photoWall.photoList)"
+          :key="photo.filename"
+          :src="imageSrc(photo.filename)"
+          :alt="photo.filename"
+          class="photo-item"
+          :style="[fadeInDelay(index)]"
+        />
+      </div>
+      <div class="waterfall-half">
+        <ZoomInOutImage
+          v-for="(photo, index) in even(photoWall.photoList)"
+          :key="photo.filename"
+          :src="imageSrc(photo.filename)"
+          :alt="photo.filename"
+          class="photo-item"
+          :style="[fadeInDelay(index)]"
+        />
+      </div>
     </div>
   </div>
   <RouterLink to="/photo/add">
@@ -101,11 +101,39 @@ function imageSrc(filename) {
 </template>
 
 <style>
+.photo-wall-wrapper {
+  overflow: auto;
+  height: 100vh;
+  width: 100%;
+}
+
 .photo-wall {
   display: flex;
   flex-direction: row;
   width: 100%;
   padding: 0.5rem;
+}
+
+.waterfall-half img {
+  animation-name: fade-in;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+}
+
+.waterfall-half {
+  width: 50%;
+  -webkit-box-flex: 1;
+  -ms-flex: auto;
+  flex: auto;
+}
+.waterfall-half:first-child {
+  margin: 0 0.5rem 0 0;
+}
+
+.photo-item {
+  width: 100%;
+  border-radius: 1rem;
 }
 
 @keyframes fade-in {
@@ -115,13 +143,6 @@ function imageSrc(filename) {
   100% {
     opacity: 1;
   }
-}
-
-.waterfall-half img {
-  animation-name: fade-in;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-out;
-  animation-fill-mode: both;
 }
 
 #add-btn {
@@ -167,20 +188,5 @@ function imageSrc(filename) {
   display: flex;
   place-items: center;
   place-content: center;
-}
-
-.waterfall-half {
-  width: 50%;
-  -webkit-box-flex: 1;
-  -ms-flex: auto;
-  flex: auto;
-}
-.waterfall-half:first-child {
-  margin: 0 0.5rem 0 0;
-}
-
-.photo-item {
-  width: 100%;
-  border-radius: 1rem;
 }
 </style>
