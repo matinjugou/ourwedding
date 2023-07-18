@@ -1,25 +1,9 @@
 <script setup>
-import { RouterLink, RouterView, useRouter } from 'vue-router'
-import { useGuestInfoStore } from '@/stores/guest.js'
+import { RouterLink, RouterView } from 'vue-router'
 import HomeIcon from '@/components/icons/IconHome.vue'
-import { ElMessage } from 'element-plus'
+import { useGuestInfoStore } from '@/stores/guest.js'
 
-const router = useRouter()
 const guestInfo = useGuestInfoStore()
-guestInfo
-  .init()
-  .then((res) => {
-    ElMessage.success('登录成功')
-    guestInfo.login(res.data.data)
-    router.push('/')
-  })
-  .catch((err) => {
-    try {
-      ElMessage.error(err.response.data.message)
-    } catch {
-      // ElMessage.error(err)
-    }
-  })
 </script>
 
 <template>

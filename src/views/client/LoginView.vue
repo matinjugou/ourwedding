@@ -20,6 +20,7 @@ function verify() {
       router.push('/')
     })
     .catch((err) => {
+      guestInfo.logout()
       ElMessage.error(err.response.data.message)
     })
 }
