@@ -41,30 +41,33 @@ defineProps({
   width: 100%;
   height: 100vh;
   box-sizing: border-box;
-  background-image: url('@/assets/images/bg.png');
+  background-image: url('@/assets/images/bg2.jpeg');
   background-size: cover;
   background-position: center;
-  padding: 56.8vh 2rem 2rem;
+  padding: 56.65vh 2rem 2rem;
   overflow: hidden;
 }
 
 .greetings h1 {
-  background-image: url('@/assets/images/gold_bg.jpeg');
+  /* background-image: url('@/assets/images/gold_bg.jpeg');
   background-size: contain;
   background-repeat: repeat;
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;*/
+  color: rgb(237, 188, 98);
   width: fit-content;
   font-family: 阿里妈妈东方大楷 Regular;
   font-weight: 500;
   font-size: 2.6rem;
   line-height: initial;
   white-space: nowrap;
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 .greetings p {
   font-family: '阿里巴巴普惠体 2.0 35 Thin';
   color: #f6e3e3c2;
+  text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
   font-weight: 600;
   font-size: 1rem;
 }
