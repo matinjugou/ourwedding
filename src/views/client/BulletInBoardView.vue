@@ -39,11 +39,20 @@ const freshDanmakuList = (
 
 const sendDanmaku = () => {
   if (msgInput.value.trim()) {
-    danmakuStore.createDanmaku(msgInput.value.trim(), guestInfo.userInfo.id).then(() => {
-      freshDanmakuList(lastDanmakuId.value)
-      msgInput.value = ''
-      ElMessage.success('发送成功')
-    })
+    danmakuStore
+      .createDanmaku(msgInput.value.trim(), guestInfo.userInfo.id)
+      .then(() => {
+        freshDanmakuList(lastDanmakuId.value)
+        msgInput.value = ''
+        ElMessage.success('发送成功')
+      })
+      .catch((err) => {
+        if (err.response) {
+          ElMessage.error(err.response.data.message)
+        } else {
+          ElMessage.error('发生未知错误')
+        }
+      })
   }
 }
 
