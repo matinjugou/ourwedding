@@ -44,9 +44,9 @@ const guestInfo = useGuestInfoStore()
       <template #header>
         <h3>注意事项</h3>
       </template>
-      <p>1. <span class="important">谢绝礼金，感谢理解</span></p>
-      <p>2. 到场后扫描现场二维码签到并领取伴手礼</p>
-      <p>3. 如有停车需要请提前联系新郎或者新娘</p>
+      <p>1. <span class="important">谢绝礼金，感谢理解；</span></p>
+      <p>2. 到场后扫描现场二维码签到并领取伴手礼；</p>
+      <p>3. 如有停车需要请提前联系新郎或者新娘；</p>
       <p>
         4. 若有条件，着装配色请尽量参考下面的色卡。
         <span class="important">得体即可，无风格要求。</span>
