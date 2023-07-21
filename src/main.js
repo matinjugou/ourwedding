@@ -24,7 +24,7 @@ router.beforeEach((to, from, next) => {
       .then((res) => {
         ElMessage.success('登录成功')
         guestInfo.login(res.data.data)
-        router.push('/')
+        router.push(to)
       })
       .catch((err) => {
         guestInfo.logout()
