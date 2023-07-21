@@ -21,7 +21,7 @@ const guestInfo = useGuestInfoStore()
       </div>
       <div>
         <span>婚礼地点：</span>
-        <span>金茂北京王府井万丽酒店</span>
+        <span>北京王府井金茂万丽酒店</span>
       </div>
       <div>
         <span>开始签到时间：</span>
