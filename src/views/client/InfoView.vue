@@ -35,8 +35,8 @@ const guestInfo = useGuestInfoStore()
       <div>
         <div>
           <span>您的坐席标识为：</span>
-          <span>[尚在调整中]</span>
-          <!--el-image :src="guestInfo.getSeatImage()" class="image"></el-image-->
+          <span v-if="guestInfo.seat_type === 0">[尚在调整中]</span>
+          <el-image v-else :src="guestInfo.getSeatImage()" class="image"></el-image>
         </div>
       </div>
     </el-card>
