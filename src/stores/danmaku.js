@@ -19,6 +19,12 @@ export const useDanmakuStore = defineStore('danmaku', () => {
       }
     })
   }
+  const initDanmakuList = () => {
+    return api.get(
+      'https://bulletin-board-wedding-service-pbffkjgajx.cn-beijing.fcapp.run/recent_legal_danmaku',
+      {}
+    )
+  }
 
   /*
   const getNewestDanmakuList = () => {
@@ -70,6 +76,7 @@ export const useDanmakuStore = defineStore('danmaku', () => {
 
   return {
     fetchDanmakuList,
+    initDanmakuList,
     createDanmaku,
     reviewDanmaku
   }

@@ -31,7 +31,7 @@ onUnmounted(() => {
 })
 
 const maxDisplayLength = 10
-const cardCount = 3
+const cardCount = 4
 const totalCardCount = cardCount + 3
 
 const danmakuStore = useDanmakuStore()
@@ -70,31 +70,57 @@ for (let i = 0; i < totalCardCount; i++) {
 nextVisibleDanmakuIndex.value = totalCardCount - 3
 
 const newDanmakuList = []
+let inited = false
 let lastUpdateTime = 0
 let lastIdSet = new Set()
 setInterval(() => {
-  danmakuStore.fetchDanmakuList(0, 10, 'true', null, lastUpdateTime).then((res) => {
-    if (res.data.length > 0) {
-      const checkItem = (index) => {
-        if (index >= res.data.length) {
-          return
-        }
-        const item = res.data[index]
-        if (item.update_time > lastUpdateTime) {
-          insertNewDanmakuItem(item)
-          lastUpdateTime = item.update_time
-          lastIdSet.add(item.id)
-        } else {
-          if (!lastIdSet.has(item.id)) {
-            insertNewDanmakuItem(item)
-            lastIdSet.add(item.id)
+  if (!inited) {
+    danmakuStore.initDanmakuList().then((res) => {
+      if (res.data.length > 0) {
+        const checkItem = (index) => {
+          if (index >= res.data.length) {
+            return
           }
+          const item = res.data[index]
+          if (item.update_time > lastUpdateTime) {
+            insertNewDanmakuItem(item)
+            lastUpdateTime = item.update_time
+            lastIdSet.add(item.id)
+          } else {
+            if (!lastIdSet.has(item.id)) {
+              insertNewDanmakuItem(item)
+              lastIdSet.add(item.id)
+            }
+          }
+          setTimeout(checkItem, 100, index + 1)
         }
-        setTimeout(checkItem, 100, index + 1)
+        checkItem(0)
       }
-      checkItem(0)
-    }
-  })
+    })
+  } else {
+    danmakuStore.fetchDanmakuList(0, 10, 'true', null, lastUpdateTime).then((res) => {
+      if (res.data.length > 0) {
+        const checkItem = (index) => {
+          if (index >= res.data.length) {
+            return
+          }
+          const item = res.data[index]
+          if (item.update_time > lastUpdateTime) {
+            insertNewDanmakuItem(item)
+            lastUpdateTime = item.update_time
+            lastIdSet.add(item.id)
+          } else {
+            if (!lastIdSet.has(item.id)) {
+              insertNewDanmakuItem(item)
+              lastIdSet.add(item.id)
+            }
+          }
+          setTimeout(checkItem, 100, index + 1)
+        }
+        checkItem(0)
+      }
+    })
+  }
 }, 1000)
 
 const insertNewDanmakuItem = (item) => {
